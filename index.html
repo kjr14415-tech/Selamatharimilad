@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Scrapbook & Custom Music Card</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Pacifico, Caveat, Fredoka, Quicksand -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #f3d8ec;
+      --bg-secondary: #f7e1f1;
+      --accent-primary: #ef629f;
+      --accent-dark: #c2185b;
+      --paper-cream: #fdf6ec;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: radial-gradient(circle at top left, #fce4ec 0%, #f3e5f5 48%, #e3f2fd 100%);
+      min-height: 100vh;
+      margin: 0;
+      color: #4a3340;
+      overflow-x: hidden;
+    }
+
+    .font-pacifico { font-family: 'Pacifico', cursive; }
+    .font-caveat { font-family: 'Caveat', cursive; }
+    .font-fredoka { font-family: 'Fredoka', sans-serif; }
+
+    /* Tekstur kertas scrapbook lembut */
+    .scrapbook-canvas {
+      background-color: var(--bg-main);
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.5) 1.5px, transparent 1.5px),
+        radial-gradient(rgba(239, 98, 159, 0.14) 1.5px, var(--bg-secondary) 1.5px);
+      background-size: 26px 26px;
+      background-position: 0 0, 13px 13px;
+      transition: background-color 0.4s ease;
+    }
+
+    /* Efek stiker cut-out putih */
+    .cutout-sticker {
+      filter:
+        drop-shadow(0 2.5px 0 #ffffff)
+        drop-shadow(0 -2.5px 0 #ffffff)
+        drop-shadow(2.5px 0 0 #ffffff)
+        drop-shadow(-2.5px 0 0 #ffffff)
+        drop-shadow(0 6px 12px rgba(136, 14, 79, 0.18));
+    }
+
+    .soft-shadow {
+      filter: drop-shadow(0 6px 12px rgba(136, 14, 79, 0.15));
+    }
+
+    /* Kartu Kertas Sobek Krem */
+    .parchment-letter {
+      background-color: var(--paper-cream);
+      background-image: linear-gradient(to bottom, rgba(215, 194, 168, 0.28) 1px, transparent 1px);
+      background-size: 100% 23px;
+      position: relative;
+      box-shadow: 0 10px 24px rgba(136, 14, 79, 0.14);
+      border-radius: 10px;
+    }
+
+    .parchment-letter::before {
+      content: "";
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 96px;
+      height: 22px;
+      background: rgba(255, 182, 193, 0.78);
+      border-left: 2px dashed rgba(255, 255, 255, 0.7);
+      border-right: 2px dashed rgba(255, 255, 255, 0.7);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Tombol Pill Pink Estetis */
+    .btn-pastel-pink {
+      background: linear-gradient(180deg, #ff8ab8 0%, #ef629f 100%);
+      color: #ffffff;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(233, 30, 99, 0.32), inset 0 2px 3px rgba(255, 255, 255, 0.55);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    }
+    .btn-pastel-pink:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 9px 20px rgba(233, 30, 99, 0.4);
+    }
+    .btn-pastel-pink:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    /* Keyframes Animasi */
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-9px) rotate(2.5deg); }
+    }
+
+    @keyframes popSpring {
+      0% { opacity: 0; transform: scale(0.35) translateY(18px); }
+      65% { opacity: 1; transform: scale(1.07) translateY(-3px); }
+      85% { transform: scale(0.97) translateY(1px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes candleFlicker {
+      0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.96; }
+      33% { transform: scale(1.09, 0.93) rotate(2deg); opacity: 1; }
+      66% { transform: scale(0.94, 1.07) rotate(-1deg); opacity: 0.9; }
+    }
+
+    @keyframes smokePuff {
+      0% { opacity: 0.85; transform: translateY(0) scale(0.6); }
+      100% { opacity: 0; transform: translateY(-32px) scale(1.7); }
+    }
+
+    @keyframes eqDance {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+
+    @keyframes giftWiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-2.5deg) scale(1.03); }
+      75% { transform: rotate(2.5deg) scale(1.03); }
+    }
+
+    @keyframes lidFly {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-44px) rotate(-11deg); }
+    }
+
+    @keyframes plushRise {
+      0% { opacity: 0; transform: translateY(28px) scale(0.55); }
+      70% { opacity: 1; transform: translateY(-5px) scale(1.06); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes tapBoing {
+      0% { transform: scale(1); }
+      35% { transform: scale(0.88) rotate(-3deg); }
+      70% { transform: scale(1.08) rotate(2deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .anim-bounce { animation: gentleBounce 3s ease-in-out infinite; }
+    .anim-pop { animation: popSpring 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .anim-flame { animation: candleFlicker 0.85s ease-in-out infinite; transform-origin: bottom center; }
+    .anim-smoke { animation: smokePuff 1.2s ease-out forwards; }
+    .anim-gift { animation: giftWiggle 2.3s ease-in-out infinite; }
+    .anim-lid { animation: lidFly 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .anim-plush { animation: plushRise 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .anim-tap-boing { animation: tapBoing 0.42s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+    .eq-bar {
+      width: 3px;
+      border-radius: 999px;
+      background-color: #ef629f;
+      height: 4px;
+    }
+    .eq-playing .eq-bar:nth-child(1) { animation: eqDance 0.6s ease-in-out infinite; }
+    .eq-playing .eq-bar:nth-child(2) { animation: eqDance 0.45s ease-in-out infinite 0.15s; }
+    .eq-playing .eq-bar:nth-child(3) { animation: eqDance 0.7s ease-in-out infinite 0.3s; }
+
+    /* Custom Scrollbar */
+    .nice-scroll::-webkit-scrollbar { width: 5px; }
+    .nice-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.25); }
+    .nice-scroll::-webkit-scrollbar-thumb { background: rgba(239, 98, 159, 0.45); border-radius: 9999px; }
+
+    #confetti-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 45;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-0 sm:p-4">
+
+  <!-- Toast Notifikasi (Pengganti alert()) -->
+  <div id="toast-banner" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 -translate-y-3">
+    <div class="bg-white/95 backdrop-blur-md border-2 border-pink-300 text-pink-800 px-4 py-2 rounded-full shadow-xl text-xs sm:text-sm font-bold flex items-center gap-2">
+      <span>✨</span>
+      <span id="toast-text">Tersimpan!</span>
+    </div>
+  </div>
+
+  <!-- Bilah Pengalih Mode Atas -->
+  <header id="top-mode-bar" class="w-full max-w-[430px] bg-white/90 backdrop-blur-md sm:rounded-full px-3.5 py-2 sm:mb-3 shadow-md border-b sm:border border-pink-200 flex items-center justify-between z-30">
+    <div class="flex items-center gap-1.5">
+      <span class="text-lg">🎂</span>
+      <span class="font-fredoka font-bold text-pink-600 text-sm sm:text-base tracking-tight">BdayScrapbook</span>
+    </div>
+
+    <div class="flex items-center bg-pink-100/90 p-1 rounded-full border border-pink-200">
+      <button id="tab-view" onclick="playSfx('pop'); switchAppMode('view')" class="px-3 py-1 rounded-full text-xs font-bold transition-all bg-pink-500 text-white shadow-sm">
+        👁️ Pratinjau Kartu
+      </button>
+      <button id="tab-edit" onclick="playSfx('pop'); switchAppMode('edit')" class="px-3 py-1 rounded-full text-xs font-bold transition-all text-pink-700 hover:bg-pink-200/60">
+        ✏️ Edit & Custom Musik
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- WADAH UTAMA BERBENTUK PONSEL (RESPONSIVE MOBILE & DESKTOP FRAME)      -->
+  <!-- ===================================================================== -->
+  <main id="phone-wrapper" class="relative w-full max-w-[430px] h-[calc(100vh-52px)] sm:h-[790px] sm:max-h-[86vh] sm:rounded-[38px] sm:border-[8px] sm:border-white shadow-2xl overflow-hidden flex flex-col scrapbook-canvas">
+    
+    <!-- Canvas Konfeti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- =================================================================== -->
+    <!-- MODE 1: VIEWER KARTU UCAPAN INTERAKTIF                              -->
+    <!-- =================================================================== -->
+    <section id="viewer-section" class="relative w-full h-full flex flex-col overflow-hidden">
+      
+      <!-- Floating Music & SFX Player Pill di Pojok Kanan Atas -->
+      <div id="floating-music-pill" class="hidden absolute top-3 right-3 z-30 flex items-center gap-1.5">
+        <button onclick="playSfx('pop'); restartCardFlow()" title="Ulangi dari awal" class="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-pink-600 border border-pink-200 shadow-md flex items-center justify-center text-xs font-bold transition active:scale-90">
+          ↺
+        </button>
+
+        <!-- Tombol Mute / Unmute Efek Suara Sentuhan (SFX) -->
+        <button id="btn-toggle-sfx" onclick="toggleSfxMute()" title="Aktifkan/Matikan Efek Suara Sentuhan" class="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-pink-600 border border-pink-200 shadow-md flex items-center justify-center text-xs font-bold transition active:scale-90">
+          🔔
+        </button>
+
+        <button onclick="playSfx('pop'); toggleAudioPlayback()" class="bg-white/95 hover:bg-white backdrop-blur-md border border-pink-200 shadow-md rounded-full pl-3 pr-2.5 py-1.5 flex items-center gap-2 transition active:scale-95 max-w-[180px]">
+          <!-- Equalizer Bars -->
+          <div id="eq-indicator" class="flex items-end gap-[2px] h-3.5 flex-shrink-0">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </div>
+          <!-- Judul Lagu Berjalan/Terpotong Rapi -->
+          <span id="pill-song-title" class="text-[11px] font-bold text-pink-700 truncate">
+            Happy Birthday Music Box
+          </span>
+          <!-- Ikon Play/Pause -->
+          <span id="pill-play-icon" class="w-5 h-5 rounded-full bg-pink-500 text-white text-[10px] flex items-center justify-center flex-shrink-0">
+            ▶
+          </span>
+        </button>
+      </div>
+
+      <!-- ----------------------------------------------------------------- -->
+      <!-- SCREEN 1: TAP THE PARTY HAT                                       -->
+      <!-- ----------------------------------------------------------------- -->
+      <div id="screen-1" onclick="handleHatTap()" class="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer select-none relative">
+        <!-- Stiker dekorasi melayang -->
+        <span class="absolute top-16 left-10 text-2xl opacity-75 anim-bounce" style="animation-delay: 0.4s;">✨</span>
+        <span class="absolute top-24 right-12 text-xl opacity-75 anim-bounce" style="animation-delay: 1.1s;">💖</span>
+        <span class="absolute bottom-24 left-12 text-xl opacity-75 anim-bounce" style="animation-delay: 0.8s;">⭐</span>
+        <span class="absolute bottom-20 right-10 text-2xl opacity-75 anim-bounce" style="animation-delay: 1.5s;">🎵</span>
+
+        <div id="party-hat-hero" class="anim-bounce flex flex-col items-center">
+          <!-- Topi Ulang Tahun Kerucut Polkadot Pink dengan Pom-Pom -->
+          <svg class="w-44 h-48 cutout-sticker" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rumbai Bawah -->
+            <circle cx="42" cy="182" r="9" fill="#FFCDD2"/>
+            <circle cx="58" cy="187" r="9" fill="#FFF9C4"/>
+            <circle cx="75" cy="190" r="9" fill="#FFCDD2"/>
+            <circle cx="92" cy="192" r="9" fill="#FFF9C4"/>
+            <circle cx="109" cy="192" r="9" fill="#FFCDD2"/>
+            <circle cx="126" cy="190" r="9" fill="#FFF9C4"/>
+            <circle cx="143" cy="187" r="9" fill="#FFCDD2"/>
+            <circle cx="158" cy="182" r="9" fill="#FFF9C4"/>
+            <!-- Badan Topi -->
+            <path d="M100 36 L36 180 Q100 198 164 180 Z" fill="#F06292"/>
+            <!-- Polkadot Putih -->
+            <circle cx="100" cy="78" r="6" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="82" cy="108" r="7.5" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="118" cy="106" r="7" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="67" cy="142" r="8" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="100" cy="136" r="8.5" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="132" cy="142" r="7.5" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="55" cy="168" r="7" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="85" cy="169" r="7" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="116" cy="169" r="7" fill="#FFFFFF" opacity="0.92"/>
+            <circle cx="145" cy="167" r="6.5" fill="#FFFFFF" opacity="0.92"/>
+            <!-- Pom-pom Atas -->
+            <circle cx="100" cy="28" r="15" fill="#FFF59D"/>
+            <circle cx="93" cy="24" r="6" fill="#FFFDE7"/>
+            <circle cx="107" cy="25" r="5" fill="#FFF9C4"/>
+          </svg>
+
+          <p class="mt-6 font-fredoka font-semibold text-pink-700 text-base bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full shadow-sm border border-pink-200 animate-pulse">
+            Ketuk topi ulang tahunnya 🥳
+          </p>
+        </div>
+      </div>
+
+      <!-- ----------------------------------------------------------------- -->
+      <!-- SCREEN 2: HERO PORTRAIT & CURVED HAPPY BIRTHDAY                   -->
+      <!-- ----------------------------------------------------------------- -->
+      <div id="screen-2" class="hidden w-full h-full flex flex-col items-center justify-between py-10 px-5 select-none relative">
+        <div class="w-full flex-1 flex flex-col items-center justify-center relative">
+          
+          <!-- Teks Melengkung HAPPY -->
+          <svg class="w-72 h-24 -mb-6 z-20 anim-pop cutout-sticker" viewBox="0 0 300 100">
+            <defs>
+              <path id="archTop" d="M 30,88 Q 150,12 270,88" fill="transparent" />
+            </defs>
+            <text width="300" class="font-fredoka font-bold fill-[#ef629f]" style="font-size: 38px; letter-spacing: 5px;">
+              <textPath href="#archTop" startOffset="50%" text-anchor="middle">
+                HAPPY
+              </textPath>
+            </text>
+          </svg>
+
+          <!-- Bingkai Foto Utama + Topi Ulang Tahun + Stiker Ucapan -->
+          <div class="relative w-56 h-56 flex items-center justify-center anim-pop" style="animation-delay: 0.1s;">
+            
+            <!-- Topi Ulang Tahun Miring di Atas Foto -->
+            <svg class="w-20 h-24 absolute -top-11 right-4 z-30 transform rotate-12 cutout-sticker" viewBox="0 0 200 220" fill="none">
+              <path d="M100 36 L36 180 Q100 198 164 180 Z" fill="#F06292"/>
+              <circle cx="100" cy="82" r="8" fill="#FFF"/>
+              <circle cx="80" cy="122" r="9" fill="#FFF"/>
+              <circle cx="120" cy="120" r="9" fill="#FFF"/>
+              <circle cx="65" cy="158" r="9" fill="#FFF"/>
+              <circle cx="100" cy="155" r="9" fill="#FFF"/>
+              <circle cx="135" cy="158" r="9" fill="#FFF"/>
+              <circle cx="100" cy="28" r="16" fill="#FFF59D"/>
+            </svg>
+
+            <!-- Stiker Bubble 1 -->
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer absolute -left-5 top-4 z-30 bg-white px-2.5 py-1 rounded-2xl shadow-md border border-pink-200 transform -rotate-12 text-[10px] font-bold text-pink-600 max-w-[92px] text-center leading-tight">
+              <span id="view-sticker-1">HBD ya! 🥳</span>
+            </div>
+
+            <!-- Stiker Bubble 2 -->
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer absolute -right-6 top-12 z-30 bg-white px-2.5 py-1 rounded-2xl shadow-md border border-pink-200 transform rotate-12 text-[10px] font-bold text-pink-600 max-w-[96px] text-center leading-tight">
+              <span id="view-sticker-2">Wish u all the best ✨</span>
+            </div>
+
+            <!-- Stiker Bubble 3 -->
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer absolute -left-4 bottom-5 z-30 bg-white px-2.5 py-1 rounded-2xl shadow-md border border-pink-200 transform -rotate-6 text-[10px] font-bold text-pink-600 max-w-[98px] text-center leading-tight">
+              <span id="view-sticker-3">Makin bersinar 💖</span>
+            </div>
+
+            <!-- Stiker Emoji Kue -->
+            <div onclick="triggerInteractiveTap(this, 'sparkle')" class="cursor-pointer absolute -right-2 bottom-6 z-30 text-2xl cutout-sticker transform rotate-12">
+              🧁
+            </div>
+
+            <!-- Foto Utama Berbingkai Scalloped/Bulat Putih -->
+            <div onclick="triggerInteractiveTap(this, 'sparkle')" class="cursor-pointer w-48 h-48 rounded-full p-2 bg-white shadow-xl border-4 border-pink-200 overflow-hidden relative z-10">
+              <img id="view-hero-photo" src="" alt="Foto Ulang Tahun" class="w-full h-full object-cover rounded-full" />
+            </div>
+          </div>
+
+          <!-- Teks Melengkung BIRTHDAY -->
+          <svg class="w-80 h-24 -mt-5 z-20 anim-pop cutout-sticker" style="animation-delay: 0.2s;" viewBox="0 0 320 100">
+            <defs>
+              <path id="archBottom" d="M 22,22 Q 160,98 298,22" fill="transparent" />
+            </defs>
+            <text width="320" class="font-fredoka font-bold fill-[#ef629f]" style="font-size: 35px; letter-spacing: 4px;">
+              <textPath href="#archBottom" startOffset="50%" text-anchor="middle">
+                BIRTHDAY
+              </textPath>
+            </text>
+          </svg>
+
+          <!-- Nama Penerima & Subjudul Usia -->
+          <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer mt-1 bg-white/90 backdrop-blur-sm px-5 py-1.5 rounded-full border-2 border-pink-200 shadow-sm text-center anim-pop" style="animation-delay: 0.28s;">
+            <p class="font-fredoka font-bold text-pink-600 text-base sm:text-lg leading-tight">
+              <span id="view-recipient-name">Bestie Tersayang</span> 💖
+            </p>
+            <p id="view-age-subtitle" class="text-[11px] font-bold text-pink-400">
+              Special Day Celebration ✨
+            </p>
+          </div>
+        </div>
+
+        <button onclick="playSfx('sparkle'); goToScreen(3)" class="btn-pastel-pink font-fredoka font-semibold px-9 py-2.5 rounded-full text-base tracking-wide">
+          Lanjut ➔
+        </button>
+      </div>
+
+      <!-- ----------------------------------------------------------------- -->
+      <!-- SCREEN 3: INTERACTIVE BLOW THE CANDLES CAKE                       -->
+      <!-- ----------------------------------------------------------------- -->
+      <div id="screen-3" class="hidden w-full h-full flex flex-col items-center justify-center p-6 select-none text-center">
+        
+        <h2 id="cake-heading" class="font-caveat font-bold text-3xl sm:text-4xl text-[#c2185b] leading-snug mb-5 px-2">
+          Jangan cuman diliatin<br>tiup dong lilinnya 😊
+        </h2>
+
+        <!-- Kue Ulang Tahun 2 Tingkat dengan 3 Lilin Menyala -->
+        <div onclick="blowOutCandles()" class="relative cursor-pointer my-2 soft-shadow" title="Ketuk kue atau tombol Tiup!">
+          <svg class="w-64 h-64 mx-auto" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Piring Kue -->
+            <ellipse cx="130" cy="222" rx="108" ry="18" fill="#FFFFFF"/>
+            <ellipse cx="130" cy="219" rx="94" ry="12" fill="#FCE4EC"/>
+
+            <!-- Tingkat Bawah -->
+            <path d="M52 162 H208 V210 Q208 220 130 220 Q52 220 52 210 Z" fill="#FFF8E1"/>
+            <path d="M52 162 H208 V178 Q195 190 182 178 Q169 166 156 179 Q143 192 130 179 Q117 166 104 179 Q91 192 78 178 Q65 166 52 178 Z" fill="#F8BBD0"/>
+            <circle cx="78" cy="204" r="6" fill="#EF5350"/>
+            <circle cx="130" cy="207" r="6" fill="#EF5350"/>
+            <circle cx="182" cy="204" r="6" fill="#EF5350"/>
+
+            <!-- Tingkat Atas -->
+            <path d="M74 114 H186 V162 Q186 168 130 168 Q74 168 74 162 Z" fill="#FFECB3"/>
+            <path d="M74 114 H186 V128 Q174 138 162 128 Q150 118 138 129 Q126 140 114 129 Q102 118 90 128 Q80 136 74 128 Z" fill="#F48FB1"/>
+
+            <!-- Sprinkle -->
+            <rect x="92" y="118" width="6" height="2.5" rx="1" transform="rotate(25 92 118)" fill="#4FC3F7"/>
+            <rect x="128" y="120" width="6" height="2.5" rx="1" transform="rotate(-15 128 120)" fill="#AED581"/>
+            <rect x="162" y="118" width="6" height="2.5" rx="1" transform="rotate(35 162 118)" fill="#FFD54F"/>
+
+            <!-- Lilin 1 -->
+            <g>
+              <rect x="92" y="76" width="10" height="38" rx="3" fill="#81D4FA"/>
+              <path d="M92 84 L102 90 M92 94 L102 100 M92 104 L102 110" stroke="#FFFFFF" stroke-width="2.5"/>
+              <line x1="97" y1="71" x2="97" y2="76" stroke="#5D4037" stroke-width="2"/>
+              <g class="candle-flame anim-flame">
+                <path d="M97 48 C90 58 90 69 97 71 C104 69 104 58 97 48 Z" fill="#FF9800"/>
+                <path d="M97 54 C93 60 93 67 97 69 C101 67 101 60 97 54 Z" fill="#FFF59D"/>
+              </g>
+              <path class="candle-smoke hidden" d="M97 68 Q91 58 98 48 Q104 38 96 28" stroke="#90A4AE" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- Lilin 2 -->
+            <g>
+              <rect x="125" y="70" width="10" height="44" rx="3" fill="#F48FB1"/>
+              <path d="M125 79 L135 85 M125 89 L135 95 M125 99 L135 105" stroke="#FFFFFF" stroke-width="2.5"/>
+              <line x1="130" y1="65" x2="130" y2="70" stroke="#5D4037" stroke-width="2"/>
+              <g class="candle-flame anim-flame" style="animation-delay: 0.2s;">
+                <path d="M130 42 C123 52 123 63 130 65 C137 63 137 52 130 42 Z" fill="#FF9800"/>
+                <path d="M130 48 C126 54 126 61 130 63 C134 61 134 54 130 48 Z" fill="#FFF59D"/>
+              </g>
+              <path class="candle-smoke hidden" d="M130 62 Q136 52 129 42 Q123 32 131 22" stroke="#90A4AE" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- Lilin 3 -->
+            <g>
+              <rect x="158" y="76" width="10" height="38" rx="3" fill="#CE93D8"/>
+              <path d="M158 84 L168 90 M158 94 L168 100 M158 104 L168 110" stroke="#FFFFFF" stroke-width="2.5"/>
+              <line x1="163" y1="71" x2="163" y2="76" stroke="#5D4037" stroke-width="2"/>
+              <g class="candle-flame anim-flame" style="animation-delay: 0.35s;">
+                <path d="M163 48 C156 58 156 69 163 71 C170 69 170 58 163 48 Z" fill="#FF9800"/>
+                <path d="M163 54 C159 60 159 67 163 69 C167 67 167 60 163 54 Z" fill="#FFF59D"/>
+              </g>
+              <path class="candle-smoke hidden" d="M163 68 Q157 58 164 48 Q170 38 162 28" stroke="#90A4AE" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </g>
+          </svg>
+        </div>
+
+        <p id="cake-subtext" class="font-caveat text-xl text-pink-800/85 mb-5">
+          *Make a wish dulu baru tekan tombol tiup ya ✨
+        </p>
+
+        <div id="cake-btn-container">
+          <button onclick="blowOutCandles()" class="btn-pastel-pink font-fredoka font-semibold px-9 py-2.5 rounded-full text-base flex items-center gap-2 mx-auto">
+            <span>🌬️</span>
+            <span>Tiup</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ----------------------------------------------------------------- -->
+      <!-- SCREEN 4: SCROLLABLE SCRAPBOOK LETTER, RETRO TVs & GIFT BOX       -->
+      <!-- ----------------------------------------------------------------- -->
+      <div id="screen-4" class="hidden w-full h-full overflow-y-auto nice-scroll px-5 pt-14 pb-16 space-y-8 select-none">
+        
+        <!-- 1. Mini Vintage Vinyl / Music Widget & Not Balok -->
+        <div class="flex items-center justify-between bg-white/85 backdrop-blur-sm px-3.5 py-2 rounded-2xl border border-pink-200 shadow-sm">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <!-- Piringan Hitam Mini -->
+            <div id="mini-vinyl-disc" onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer w-9 h-9 rounded-full bg-gray-900 border-2 border-pink-300 flex items-center justify-center flex-shrink-0">
+              <div class="w-3.5 h-3.5 rounded-full bg-pink-400 border border-white"></div>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[10px] font-bold text-pink-400 uppercase tracking-wider">Now Playing 🎶</p>
+              <p id="scrapbook-song-name" class="text-xs font-bold text-pink-700 truncate">Happy Birthday Music Box</p>
+            </div>
+          </div>
+          <button onclick="playSfx('pop'); toggleAudioPlayback()" class="px-2.5 py-1 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-[11px] font-bold flex-shrink-0">
+            ⏯️ Musik
+          </button>
+        </div>
+
+        <!-- 2. Kartu Surat Kertas Krem + Buket Tulip -->
+        <div onclick="triggerInteractiveTap(this, 'paper')" class="cursor-pointer parchment-letter p-5 pt-6 relative" title="Ketuk surat untuk efek suara kertas">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex-1">
+              <p class="font-caveat font-bold text-pink-500 text-xl leading-none">
+                To: <span id="letter-recipient">Bestie Tersayang</span>
+              </p>
+              <h3 class="font-pacifico text-[#d81b60] text-2xl mt-1 mb-3">Happy Birthday</h3>
+            </div>
+
+            <!-- Ilustrasi Bunga Tulip Pink -->
+            <svg class="w-16 h-20 flex-shrink-0 -mt-2" viewBox="0 0 80 100" fill="none">
+              <path d="M32 95 Q30 65 26 42" stroke="#66BB6A" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M48 95 Q52 68 55 48" stroke="#66BB6A" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M31 75 Q14 64 16 48 Q28 56 31 75 Z" fill="#81C784"/>
+              <path d="M50 78 Q68 66 64 50 Q52 58 50 78 Z" fill="#66BB6A"/>
+              <path d="M16 32 C16 46 36 46 36 32 C36 22 31 14 26 20 C21 14 16 22 16 32 Z" fill="#F48FB1"/>
+              <path d="M21 32 C21 43 31 43 31 32 C31 24 26 16 26 16 C26 16 21 24 21 32 Z" fill="#F06292"/>
+              <path d="M44 38 C44 51 64 51 64 38 C64 28 59 20 54 26 C49 20 44 28 44 38 Z" fill="#FF8A80"/>
+              <path d="M49 38 C49 48 59 48 59 38 C59 30 54 22 54 22 C54 22 49 30 49 38 Z" fill="#FF5252"/>
+            </svg>
+          </div>
+
+          <p id="view-letter-text" class="text-[13.5px] leading-relaxed text-[#573e4b] font-medium whitespace-pre-line">
+            Selamat ulang tahun ya! Semoga di umur yang baru ini semua hal baik selalu menyertaimu. Terima kasih sudah selalu hadir dan membawa keceriaan di setiap momen. Sehat selalu, bahagia terus, dan semoga semua impianmu tercapai! 💖✨
+          </p>
+        </div>
+
+        <!-- 3. Tiga Bingkai TV Retro Bertumpuk dengan Pita Pink -->
+        <div class="space-y-6">
+          <div class="text-center">
+            <span class="inline-block bg-white/85 px-4 py-1 rounded-full text-xs font-bold text-pink-600 border border-pink-200 shadow-sm">
+              📺 Little Memories Channel
+            </span>
+          </div>
+
+          <!-- TV 1 -->
+          <div class="flex items-center gap-3">
+            <div onclick="triggerInteractiveTap(this, 'tv')" class="cursor-pointer relative w-44 flex-shrink-0 transform -rotate-2 soft-shadow" title="Ketuk TV retro">
+              <!-- Pita Pink Pojok Kiri Atas -->
+              <svg class="w-11 h-11 absolute -top-4 -left-2 z-20" viewBox="0 0 60 60" fill="none">
+                <path d="M30 30 C16 14 6 24 18 34 C24 38 30 30 30 30 Z" fill="#F06292"/>
+                <path d="M30 30 C44 14 54 24 42 34 C36 38 30 30 30 30 Z" fill="#EC407A"/>
+                <path d="M27 32 L18 50 L25 46 L30 33 Z" fill="#D81B60"/>
+                <path d="M33 32 L42 50 L35 46 L30 33 Z" fill="#E91E63"/>
+                <circle cx="30" cy="30" r="5" fill="#FCE4EC"/>
+              </svg>
+              <div class="bg-[#f5e6cc] border-[3px] border-[#d7be98] rounded-2xl p-2.5 shadow-md">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-28 h-24 bg-gray-900 rounded-xl overflow-hidden border-2 border-[#c4a77d] relative">
+                    <img id="view-tv-img-1" src="" alt="Kenangan 1" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/25 pointer-events-none"></div>
+                  </div>
+                  <div class="flex flex-col items-center justify-between h-24 py-1">
+                    <div class="w-4 h-4 rounded-full bg-[#c4a77d] border border-white"></div>
+                    <div class="w-4 h-4 rounded-full bg-[#f06292] border border-white"></div>
+                    <div class="space-y-1">
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer flex-1 bg-white/95 p-3 rounded-2xl rounded-bl-none shadow-md border border-pink-200 transform rotate-1">
+              <p id="view-tv-cap-1" class="font-caveat text-lg leading-tight text-pink-700 font-bold">
+                "Momen paling seru bareng kamu, nggak pernah gagal bikin ketawa!"
+              </p>
+            </div>
+          </div>
+
+          <!-- TV 2 -->
+          <div class="flex items-center gap-3">
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer flex-1 bg-white/95 p-3 rounded-2xl rounded-br-none shadow-md border border-pink-200 transform -rotate-1">
+              <p id="view-tv-cap-2" class="font-caveat text-lg leading-tight text-pink-700 font-bold">
+                "Semoga senyum manis ini selalu ada di setiap harimu ya 🌸"
+              </p>
+            </div>
+
+            <div onclick="triggerInteractiveTap(this, 'tv')" class="cursor-pointer relative w-44 flex-shrink-0 transform rotate-2 soft-shadow" title="Ketuk TV retro">
+              <svg class="w-11 h-11 absolute -top-4 -left-2 z-20" viewBox="0 0 60 60" fill="none">
+                <path d="M30 30 C16 14 6 24 18 34 C24 38 30 30 30 30 Z" fill="#F06292"/>
+                <path d="M30 30 C44 14 54 24 42 34 C36 38 30 30 30 30 Z" fill="#EC407A"/>
+                <path d="M27 32 L18 50 L25 46 L30 33 Z" fill="#D81B60"/>
+                <path d="M33 32 L42 50 L35 46 L30 33 Z" fill="#E91E63"/>
+                <circle cx="30" cy="30" r="5" fill="#FCE4EC"/>
+              </svg>
+              <div class="bg-[#f5e6cc] border-[3px] border-[#d7be98] rounded-2xl p-2.5 shadow-md">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-28 h-24 bg-gray-900 rounded-xl overflow-hidden border-2 border-[#c4a77d] relative">
+                    <img id="view-tv-img-2" src="" alt="Kenangan 2" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/25 pointer-events-none"></div>
+                  </div>
+                  <div class="flex flex-col items-center justify-between h-24 py-1">
+                    <div class="w-4 h-4 rounded-full bg-[#c4a77d] border border-white"></div>
+                    <div class="w-4 h-4 rounded-full bg-[#f06292] border border-white"></div>
+                    <div class="space-y-1">
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TV 3 -->
+          <div class="flex items-center gap-3">
+            <div onclick="triggerInteractiveTap(this, 'tv')" class="cursor-pointer relative w-44 flex-shrink-0 transform -rotate-1 soft-shadow" title="Ketuk TV retro">
+              <svg class="w-11 h-11 absolute -top-4 -left-2 z-20" viewBox="0 0 60 60" fill="none">
+                <path d="M30 30 C16 14 6 24 18 34 C24 38 30 30 30 30 Z" fill="#F06292"/>
+                <path d="M30 30 C44 14 54 24 42 34 C36 38 30 30 30 30 Z" fill="#EC407A"/>
+                <path d="M27 32 L18 50 L25 46 L30 33 Z" fill="#D81B60"/>
+                <path d="M33 32 L42 50 L35 46 L30 33 Z" fill="#E91E63"/>
+                <circle cx="30" cy="30" r="5" fill="#FCE4EC"/>
+              </svg>
+              <div class="bg-[#f5e6cc] border-[3px] border-[#d7be98] rounded-2xl p-2.5 shadow-md">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-28 h-24 bg-gray-900 rounded-xl overflow-hidden border-2 border-[#c4a77d] relative">
+                    <img id="view-tv-img-3" src="" alt="Kenangan 3" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/25 pointer-events-none"></div>
+                  </div>
+                  <div class="flex flex-col items-center justify-between h-24 py-1">
+                    <div class="w-4 h-4 rounded-full bg-[#c4a77d] border border-white"></div>
+                    <div class="w-4 h-4 rounded-full bg-[#f06292] border border-white"></div>
+                    <div class="space-y-1">
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                      <div class="w-4 h-0.5 bg-[#a88b63]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div onclick="triggerInteractiveTap(this, 'pop')" class="cursor-pointer flex-1 bg-white/95 p-3 rounded-2xl rounded-bl-none shadow-md border border-pink-200 transform rotate-1">
+              <p id="view-tv-cap-3" class="font-caveat text-lg leading-tight text-pink-700 font-bold">
+                "Mari buat lebih banyak cerita seru lagi di tahun ini! 🥂✨"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Ilustrasi Buket Bunga Terbungkus -->
+        <div onclick="triggerInteractiveTap(this, 'sparkle')" class="cursor-pointer flex flex-col items-center pt-1">
+          <svg class="w-44 h-48 cutout-sticker" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 85 L100 195 L160 85 Q100 62 40 85 Z" fill="#FFF8E1" stroke="#F8BBD0" stroke-width="3"/>
+            <ellipse cx="62" cy="82" rx="16" ry="9" transform="rotate(-30 62 82)" fill="#81C784"/>
+            <ellipse cx="138" cy="82" rx="16" ry="9" transform="rotate(30 138 82)" fill="#81C784"/>
+            <ellipse cx="100" cy="64" rx="12" ry="18" fill="#66BB6A"/>
+            <circle cx="76" cy="82" r="18" fill="#F48FB1"/>
+            <circle cx="76" cy="82" r="10" fill="#EC407A"/>
+            <circle cx="124" cy="82" r="18" fill="#F48FB1"/>
+            <circle cx="124" cy="82" r="10" fill="#EC407A"/>
+            <circle cx="100" cy="74" r="20" fill="#FFF59D"/>
+            <circle cx="100" cy="74" r="11" fill="#FBC02D"/>
+            <circle cx="88" cy="102" r="16" fill="#FF8A80"/>
+            <circle cx="112" cy="102" r="16" fill="#CE93D8"/>
+            <path d="M52 104 L100 198 L148 104 Q100 120 52 104 Z" fill="#FCE4EC" stroke="#F48FB1" stroke-width="2.5"/>
+            <path d="M100 154 C84 142 76 152 88 160 C94 163 100 154 100 154 Z" fill="#F06292"/>
+            <path d="M100 154 C116 142 124 152 112 160 C106 163 100 154 100 154 Z" fill="#F06292"/>
+            <path d="M97 156 L88 180 M103 156 L112 180" stroke="#F06292" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="100" cy="154" r="4.5" fill="#FCE4EC"/>
+          </svg>
+        </div>
+
+        <!-- 5. Kotak Kado Interaktif ("Buka kado nya 🎁") -->
+        <div class="flex flex-col items-center pb-6">
+          <p class="font-fredoka font-bold text-[#d81b60] text-lg mb-3 animate-bounce">
+            Buka kado nya 🎁
+          </p>
+
+          <!-- Kotak Kado Tertutup (Awal) -->
+          <div id="gift-closed-box" onclick="revealGiftBox()" class="cursor-pointer anim-gift flex flex-col items-center">
+            <svg class="w-48 h-40 cutout-sticker transition-transform hover:scale-105" viewBox="0 0 220 180" fill="none">
+              <ellipse cx="110" cy="162" rx="86" ry="10" fill="rgba(136, 14, 79, 0.14)"/>
+              <rect x="34" y="68" width="152" height="90" rx="10" fill="#F48FB1"/>
+              <rect x="98" y="68" width="24" height="90" fill="#FCE4EC"/>
+              <rect x="26" y="44" width="168" height="28" rx="8" fill="#F06292"/>
+              <rect x="98" y="44" width="24" height="28" fill="#FFFFFF"/>
+              <path d="M110 44 C82 14 58 32 86 44 Z" fill="#FCE4EC" stroke="#F06292" stroke-width="2"/>
+              <path d="M110 44 C138 14 162 32 134 44 Z" fill="#FCE4EC" stroke="#F06292" stroke-width="2"/>
+              <circle cx="110" cy="42" r="8" fill="#FFFFFF" stroke="#F06292" stroke-width="2"/>
+            </svg>
+            <span class="mt-1 text-xs font-bold text-pink-700 bg-white/85 px-3.5 py-1 rounded-full shadow-sm">
+              Ketuk untuk membuka ✨
+            </span>
+          </div>
+
+          <!-- Kotak Kado Terbuka (Muncul Saat Diketuk) -->
+          <div id="gift-opened-box" class="hidden w-full bg-white/90 backdrop-blur-sm border-2 border-pink-200 rounded-3xl p-5 shadow-xl text-center flex flex-col items-center anim-pop">
+            <h4 id="view-gift-msg" class="font-caveat font-bold text-2xl sm:text-3xl text-[#c2185b] leading-snug mb-3">
+              Semoga kamu suka ya sama kado kecilnya 🥰
+            </h4>
+
+            <div class="relative w-64 h-48 flex flex-col items-center justify-end my-1">
+              <!-- Tutup Terbang -->
+              <div class="w-56 h-7 bg-[#f06292] rounded-lg shadow-md border-2 border-white flex items-center justify-center anim-lid z-20 mb-1">
+                <div class="w-6 h-full bg-white"></div>
+              </div>
+
+              <!-- 3 Boneka Plushie Lucu (Bisa diketuk untuk efek boing!) -->
+              <div onclick="triggerInteractiveTap(this, 'boing')" title="Ketuk boneka lucu!" class="cursor-pointer flex items-end justify-center gap-1 -mb-5 z-10 anim-plush">
+                <!-- Beruang -->
+                <svg class="w-16 h-20 soft-shadow transform -rotate-6" viewBox="0 0 80 95" fill="none">
+                  <circle cx="22" cy="24" r="10" fill="#D7CCC8"/>
+                  <circle cx="58" cy="24" r="10" fill="#D7CCC8"/>
+                  <circle cx="22" cy="24" r="5" fill="#F8BBD0"/>
+                  <circle cx="58" cy="24" r="5" fill="#F8BBD0"/>
+                  <circle cx="40" cy="40" r="22" fill="#D7CCC8"/>
+                  <ellipse cx="40" cy="45" rx="9" ry="7" fill="#FFF8E1"/>
+                  <circle cx="33" cy="36" r="2.5" fill="#4E342E"/>
+                  <circle cx="47" cy="36" r="2.5" fill="#4E342E"/>
+                  <circle cx="40" cy="43" r="2.5" fill="#5D4037"/>
+                  <path d="M22 62 Q40 54 58 62 L62 88 H18 Z" fill="#BCAAA4"/>
+                  <path d="M32 58 L48 64 M48 58 L32 64" stroke="#F06292" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+
+                <!-- Kelinci Putih -->
+                <svg class="w-20 h-24 soft-shadow z-10" viewBox="0 0 80 105" fill="none">
+                  <ellipse cx="29" cy="20" rx="6.5" ry="18" transform="rotate(-8 29 20)" fill="#FFFFFF" stroke="#F8BBD0" stroke-width="2"/>
+                  <ellipse cx="51" cy="20" rx="6.5" ry="18" transform="rotate(8 51 20)" fill="#FFFFFF" stroke="#F8BBD0" stroke-width="2"/>
+                  <ellipse cx="29" cy="21" rx="3" ry="12" transform="rotate(-8 29 21)" fill="#F8BBD0"/>
+                  <ellipse cx="51" cy="21" rx="3" ry="12" transform="rotate(8 51 21)" fill="#F8BBD0"/>
+                  <circle cx="40" cy="48" r="22" fill="#FFFFFF" stroke="#F8BBD0" stroke-width="2"/>
+                  <circle cx="32" cy="45" r="2.5" fill="#4A3541"/>
+                  <circle cx="48" cy="45" r="2.5" fill="#4A3541"/>
+                  <circle cx="28" cy="50" r="3.5" fill="#FFCDD2"/>
+                  <circle cx="52" cy="50" r="3.5" fill="#FFCDD2"/>
+                  <path d="M38 51 Q40 53 42 51" stroke="#F06292" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M22 70 Q40 62 58 70 L62 98 H18 Z" fill="#FCE4EC"/>
+                </svg>
+
+                <!-- Kucing Krem -->
+                <svg class="w-16 h-20 soft-shadow transform rotate-6" viewBox="0 0 80 95" fill="none">
+                  <path d="M18 32 L22 12 L36 24 Z" fill="#FFE082"/>
+                  <path d="M62 32 L58 12 L44 24 Z" fill="#FFE082"/>
+                  <circle cx="40" cy="40" r="22" fill="#FFE082"/>
+                  <circle cx="33" cy="38" r="2.5" fill="#4E342E"/>
+                  <circle cx="47" cy="38" r="2.5" fill="#4E342E"/>
+                  <path d="M37 44 Q40 47 43 44" stroke="#E65100" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M22 62 Q40 54 58 62 L62 88 H18 Z" fill="#FFD54F"/>
+                </svg>
+              </div>
+
+              <!-- Badan Kotak -->
+              <div class="w-52 h-20 bg-[#f48fb1] rounded-b-2xl border-2 border-white shadow-lg relative z-20 flex items-center justify-center">
+                <div class="w-6 h-full bg-[#fce4ec]"></div>
+              </div>
+            </div>
+
+            <button onclick="playSfx('sparkle'); restartCardFlow()" class="mt-5 btn-pastel-pink font-fredoka font-semibold px-7 py-2 rounded-full text-sm">
+              ↺ Ulangi Kartu Dari Awal
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- MODE 2: STUDIO EDITOR & CUSTOM MUSIK                                -->
+    <!-- =================================================================== -->
+    <section id="editor-section" class="hidden w-full h-full bg-white/95 backdrop-blur-md overflow-y-auto nice-scroll p-5 pb-20 space-y-5">
+      
+      <div class="border-b border-pink-100 pb-3">
+        <h2 class="font-fredoka font-bold text-xl text-pink-600 flex items-center gap-2">
+          <span>🎨</span> Studio Kartu & Custom Musik
+        </h2>
+        <p class="text-xs text-gray-500 mt-0.5">
+          Ganti musik latar sesuai selera, sesuaikan foto & ucapan, lalu simpan atau ekspor menjadi file HTML siap kirim!
+        </p>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- KARTU PENGATURAN CUSTOM MUSIK (FITUR UTAMA)                       -->
+      <!-- ================================================================= -->
+      <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-4 rounded-2xl border-2 border-pink-200 space-y-3 shadow-sm">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-bold text-pink-800 uppercase tracking-wider flex items-center gap-1.5">
+            <span>🎵</span> 1. Custom Musik Latar
+          </label>
+          <span id="audio-source-badge" class="text-[10px] font-bold bg-pink-500 text-white px-2.5 py-0.5 rounded-full">
+            Musik Bawaan
+          </span>
+        </div>
+
+        <!-- Tab Sumber Musik -->
+        <div class="grid grid-cols-3 gap-1.5 bg-white p-1 rounded-xl border border-pink-200">
+          <button type="button" onclick="playSfx('pop'); selectMusicMode('builtin')" id="mtype-builtin" class="music-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-pink-500 text-white transition">
+            🎹 Bawaan
+          </button>
+          <button type="button" onclick="playSfx('pop'); selectMusicMode('upload')" id="mtype-upload" class="music-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-pink-700 hover:bg-pink-50 transition">
+            🎬 Upload MP4/MP3
+          </button>
+          <button type="button" onclick="playSfx('pop'); selectMusicMode('url')" id="mtype-url" class="music-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-pink-700 hover:bg-pink-50 transition">
+            🔗 Link Audio/MP4
+          </button>
+        </div>
+
+        <!-- Opsi A: Musik Bawaan Estetik (4 Melodi Web Audio) -->
+        <div id="music-panel-builtin" class="space-y-2">
+          <label class="block text-xs font-semibold text-gray-600">Pilih Melodi Synthesizer Lembut:</label>
+          <select id="input-builtin-preset" onchange="onBuiltinPresetChange()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white text-xs font-bold text-pink-700 focus:outline-none focus:border-pink-500">
+            <option value="musicbox">🎹 Happy Birthday Music Box (Lembut)</option>
+            <option value="lullaby">🌙 Sweet Pastel Lullaby (Lo-Fi)</option>
+            <option value="waltz">✨ Dreamy Piano Waltz</option>
+            <option value="chime">🔔 Cute Celebration Chime</option>
+          </select>
+        </div>
+
+        <!-- Opsi B: Upload File Video MP4 atau Audio MP3 Sendiri (Android WebView Safe) -->
+        <div id="music-panel-upload" class="hidden space-y-2.5">
+          <label for="file-input-custom-audio" class="relative block w-full overflow-hidden cursor-pointer bg-white hover:bg-pink-100/60 active:scale-[0.99] border-2 border-dashed border-pink-400 rounded-xl p-3.5 text-center transition">
+            <span class="block text-xl mb-1 pointer-events-none">🎬 🎧</span>
+            <span class="block text-xs font-bold text-pink-600 pointer-events-none">Ketuk di Sini untuk Pilih MP4 atau MP3</span>
+            <span class="block text-[10px] text-gray-400 mt-0.5 pointer-events-none">Buka File Manager / Galeri / Musik (MP4, MOV, WEBM, MP3, M4A, WAV, OGG)</span>
+            <input
+              id="file-input-custom-audio"
+              type="file"
+              accept="audio/*,video/*,.mp3,.mp4,.m4a,.wav,.ogg,.mov,.webm"
+              onchange="handleCustomAudioUpload(event)"
+              style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:10;"
+            />
+          </label>
+          <div id="uploaded-audio-info" class="hidden bg-white/90 border border-emerald-200 rounded-xl px-3 py-2 flex items-center justify-between gap-2">
+            <span id="uploaded-media-badge" class="text-[10px] font-bold bg-emerald-500 text-white px-2 py-0.5 rounded-full flex-shrink-0">
+              🎬 MP4 Audio
+            </span>
+            <p id="uploaded-audio-filename" class="text-[11px] font-bold text-emerald-700 truncate flex-1">
+              video-lagu.mp4
+            </p>
+            <span id="uploaded-media-duration" class="text-[10px] font-bold text-gray-500 flex-shrink-0">
+              0:00
+            </span>
+          </div>
+        </div>
+
+        <!-- Opsi C: Tempel URL Audio / MP4 Langsung -->
+        <div id="music-panel-url" class="hidden space-y-2">
+          <label class="block text-xs font-semibold text-gray-600">Tempel Link Langsung (.mp4 / .mp3 / .ogg / .m4a):</label>
+          <input id="input-audio-url" type="url" placeholder="https://contoh.com/lagu-atau-video.mp4" oninput="onAudioUrlInput()" class="w-full px-3 py-2 rounded-xl border border-pink-200 bg-white text-xs focus:outline-none focus:border-pink-500" />
+        </div>
+
+        <!-- Judul Lagu Tampil di Kartu -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Judul Lagu (Tampil di Pemutar Kartu):</label>
+          <input id="input-song-title" type="text" placeholder="Contoh: NIKI - Lowkey / Happy Birthday" class="w-full px-3 py-1.5 rounded-xl border border-pink-200 bg-white text-xs font-semibold focus:outline-none focus:border-pink-500" />
+        </div>
+
+        <!-- Kontrol Offset Detik Mulai (Chorus) & Volume -->
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <div>
+            <div class="flex justify-between text-[11px] font-bold text-pink-700 mb-1">
+              <span>⏩ Mulai Detik Ke:</span>
+              <span id="label-start-offset">0 dtk</span>
+            </div>
+            <input id="input-start-offset" type="range" min="0" max="180" value="0" oninput="onAudioControlChange()" class="w-full accent-pink-500 cursor-pointer" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11px] font-bold text-pink-700 mb-1">
+              <span>🔊 Volume:</span>
+              <span id="label-volume">80%</span>
+            </div>
+            <input id="input-volume" type="range" min="10" max="100" value="80" oninput="onAudioControlChange()" class="w-full accent-pink-500 cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Tombol Tes / Preview Musik Instan -->
+        <button type="button" onclick="playSfx('pop'); toggleAudioPlayback()" class="w-full py-2 px-3 rounded-xl bg-white hover:bg-pink-100 border border-pink-300 text-pink-700 font-bold text-xs flex items-center justify-center gap-2 transition">
+          <span id="editor-preview-audio-icon">▶️</span>
+          <span id="editor-preview-audio-text">Tes Putar / Jeda Musik Sekarang</span>
+        </button>
+      </div>
+
+      <!-- 2. Tema Warna Pastel -->
+      <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-100 space-y-2">
+        <label class="block text-xs font-bold text-pink-800 uppercase tracking-wider">2. Palet Warna Pastel</label>
+        <div class="grid grid-cols-4 gap-2">
+          <button type="button" onclick="selectPalette('pink')" data-palette="pink" class="palette-btn flex flex-col items-center gap-1 p-2 rounded-xl border-2 border-pink-500 bg-white shadow-sm">
+            <span class="w-6 h-6 rounded-full bg-[#f3d8ec] border border-pink-300"></span>
+            <span class="text-[11px] font-bold text-gray-700">Pastel Pink</span>
+          </button>
+          <button type="button" onclick="selectPalette('lavender')" data-palette="lavender" class="palette-btn flex flex-col items-center gap-1 p-2 rounded-xl border-2 border-transparent bg-white shadow-sm">
+            <span class="w-6 h-6 rounded-full bg-[#e4d7f5] border border-purple-300"></span>
+            <span class="text-[11px] font-bold text-gray-700">Lavender</span>
+          </button>
+          <button type="button" onclick="selectPalette('peach')" data-palette="peach" class="palette-btn flex flex-col items-center gap-1 p-2 rounded-xl border-2 border-transparent bg-white shadow-sm">
+            <span class="w-6 h-6 rounded-full bg-[#fde2d4] border border-orange-300"></span>
+            <span class="text-[11px] font-bold text-gray-700">Peach</span>
+          </button>
+          <button type="button" onclick="selectPalette('mint')" data-palette="mint" class="palette-btn flex flex-col items-center gap-1 p-2 rounded-xl border-2 border-transparent bg-white shadow-sm">
+            <span class="w-6 h-6 rounded-full bg-[#d4f0e7] border border-teal-300"></span>
+            <span class="text-[11px] font-bold text-gray-700">Matcha</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Nama, Usia & Foto Utama -->
+      <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-100 space-y-3">
+        <label class="block text-xs font-bold text-pink-800 uppercase tracking-wider">3. Identitas & Foto Utama</label>
+        
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Penerima</label>
+            <input id="input-name" type="text" placeholder="Nama panggilan..." class="w-full px-3 py-2 rounded-xl border border-pink-200 text-xs bg-white focus:outline-none focus:border-pink-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Subjudul / Usia</label>
+            <input id="input-age" type="text" placeholder="Level 21 Unlocked ✨" class="w-full px-3 py-2 rounded-xl border border-pink-200 text-xs bg-white focus:outline-none focus:border-pink-500" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <img id="edit-thumb-main" src="" alt="Preview" class="w-12 h-12 rounded-full object-cover border-2 border-pink-300 bg-white flex-shrink-0" />
+          <label for="file-input-hero-photo" class="relative overflow-hidden flex-1 cursor-pointer bg-white hover:bg-pink-100/60 border border-dashed border-pink-400 rounded-xl px-3 py-2.5 text-center text-xs font-bold text-pink-600 transition">
+            <span class="pointer-events-none">📷 Unggah Foto Utama</span>
+            <input id="file-input-hero-photo" type="file" accept="image/*" onchange="handlePhotoUpload(event, 'heroPhoto')" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:10;" />
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. Surat Ucapan -->
+      <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-100 space-y-2">
+        <label class="block text-xs font-bold text-pink-800 uppercase tracking-wider">4. Isi Surat Ucapan</label>
+        <textarea id="input-letter" rows="4" class="w-full px-3 py-2 rounded-xl border border-pink-200 text-xs bg-white leading-relaxed focus:outline-none focus:border-pink-500"></textarea>
+      </div>
+
+      <!-- 5. Tiga TV Retro Kenangan -->
+      <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-100 space-y-3">
+        <label class="block text-xs font-bold text-pink-800 uppercase tracking-wider">5. Galeri 3 TV Retro</label>
+        
+        <div class="bg-white p-2.5 rounded-xl border border-pink-100 space-y-2">
+          <div class="flex items-center gap-2.5">
+            <img id="edit-thumb-tv1" src="" alt="TV 1" class="w-10 h-10 rounded-lg object-cover border border-pink-200 flex-shrink-0" />
+            <label for="file-input-tv1" class="relative overflow-hidden flex-1 cursor-pointer bg-pink-50 hover:bg-pink-100 rounded-lg px-2.5 py-2 text-xs font-bold text-pink-600 text-center">
+              <span class="pointer-events-none">📺 Ganti Foto TV 1</span>
+              <input id="file-input-tv1" type="file" accept="image/*" onchange="handlePhotoUpload(event, 'tvImg1')" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:10;" />
+            </label>
+          </div>
+          <input id="input-tv-cap1" type="text" class="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs" />
+        </div>
+
+        <div class="bg-white p-2.5 rounded-xl border border-pink-100 space-y-2">
+          <div class="flex items-center gap-2.5">
+            <img id="edit-thumb-tv2" src="" alt="TV 2" class="w-10 h-10 rounded-lg object-cover border border-pink-200 flex-shrink-0" />
+            <label for="file-input-tv2" class="relative overflow-hidden flex-1 cursor-pointer bg-pink-50 hover:bg-pink-100 rounded-lg px-2.5 py-2 text-xs font-bold text-pink-600 text-center">
+              <span class="pointer-events-none">📺 Ganti Foto TV 2</span>
+              <input id="file-input-tv2" type="file" accept="image/*" onchange="handlePhotoUpload(event, 'tvImg2')" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:10;" />
+            </label>
+          </div>
+          <input id="input-tv-cap2" type="text" class="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs" />
+        </div>
+
+        <div class="bg-white p-2.5 rounded-xl border border-pink-100 space-y-2">
+          <div class="flex items-center gap-2.5">
+            <img id="edit-thumb-tv3" src="" alt="TV 3" class="w-10 h-10 rounded-lg object-cover border border-pink-200 flex-shrink-0" />
+            <label for="file-input-tv3" class="relative overflow-hidden flex-1 cursor-pointer bg-pink-50 hover:bg-pink-100 rounded-lg px-2.5 py-2 text-xs font-bold text-pink-600 text-center">
+              <span class="pointer-events-none">📺 Ganti Foto TV 3</span>
+              <input id="file-input-tv3" type="file" accept="image/*" onchange="handlePhotoUpload(event, 'tvImg3')" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;z-index:10;" />
+            </label>
+          </div>
+          <input id="input-tv-cap3" type="text" class="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs" />
+        </div>
+      </div>
+
+      <!-- 6. Pesan Kotak Kado -->
+      <div class="bg-pink-50/70 p-3.5 rounded-2xl border border-pink-100 space-y-2">
+        <label class="block text-xs font-bold text-pink-800 uppercase tracking-wider">6. Pesan Saat Kotak Kado Dibuka</label>
+        <input id="input-gift-msg" type="text" class="w-full px-3 py-2 rounded-xl border border-pink-200 text-xs bg-white focus:outline-none focus:border-pink-500" />
+      </div>
+
+      <!-- Tombol Simpan, Export HTML Lengkap & Salin Link -->
+      <div class="space-y-2.5 pt-1">
+        <button onclick="playSfx('sparkle'); saveAndPreviewCard()" class="btn-pastel-pink w-full py-3 rounded-full font-fredoka font-bold text-base shadow-lg">
+          ✨ Simpan & Lihat Kartu
+        </button>
+
+        <button onclick="playSfx('pop'); downloadStandaloneHTML()" class="w-full py-3 px-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-fredoka font-bold text-sm shadow-md flex items-center justify-center gap-2 transition active:scale-95">
+          <span>⬇️</span>
+          <span>Download File HTML Lengkap (MP4/MP3 & Foto Ikut)</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="playSfx('pop'); copyShareableLink()" class="bg-white hover:bg-pink-50 text-pink-600 border-2 border-pink-300 font-bold py-2.5 px-3 rounded-full text-xs flex items-center justify-center gap-1.5 transition active:scale-95">
+            <span>🔗</span>
+            <span>Salin Link</span>
+          </button>
+          <button onclick="playSfx('pop'); resetCardToDefault()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-2.5 px-3 rounded-full text-xs flex items-center justify-center gap-1.5 transition active:scale-95">
+            <span>↺</span>
+            <span>Reset Awal</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Elemen Media HTML5 Tersembunyi untuk Custom Musik MP4 (Video Audio Track) & MP3 -->
+  <video id="custom-media-player" playsinline loop preload="auto" style="display:none;"></video>
+
+  <!-- Helper tersembunyi untuk menyalin link -->
+  <textarea id="clipboard-buffer" class="fixed -top-96 left-0 opacity-0 pointer-events-none"></textarea>
+
+  <!-- Data tersembunyi jika file diekspor sebagai standalone HTML -->
+  <script id="embedded-card-data" type="application/json"></script>
+
+  <script>
+    /**
+     * =========================================================================
+     * 1. ILUSTRASI DEFAULT (SVG DATA URI RINGAN)
+     * =========================================================================
+     */
+    function makeCutePortraitSVG(bgHex, hairHex, wink = false) {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+          <rect width="200" height="200" fill="${bgHex}"/>
+          <circle cx="35" cy="40" r="8" fill="#FFFFFF" opacity="0.65"/>
+          <circle cx="165" cy="55" r="10" fill="#FFFFFF" opacity="0.65"/>
+          <circle cx="155" cy="155" r="7" fill="#FFFFFF" opacity="0.65"/>
+          <path d="M52 95 C52 45 148 45 148 95 L155 165 H45 Z" fill="${hairHex}"/>
+          <path d="M45 185 Q100 145 155 185 L160 200 H40 Z" fill="#FFFFFF"/>
+          <path d="M78 162 Q100 176 122 162" stroke="#EF629F" stroke-width="4" fill="none"/>
+          <circle cx="100" cy="105" r="42" fill="#FFE0B2"/>
+          <path d="M58 96 Q75 64 100 84 Q125 64 142 96 Q125 74 100 74 Q75 74 58 96 Z" fill="${hairHex}"/>
+          ${wink
+            ? '<path d="M78 104 Q84 98 90 104" stroke="#4E342E" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="116" cy="103" r="4" fill="#4E342E"/>'
+            : '<circle cx="84" cy="103" r="4" fill="#4E342E"/><circle cx="116" cy="103" r="4" fill="#4E342E"/>'
+          }
+          <ellipse cx="75" cy="113" rx="6" ry="3.5" fill="#FF8A80" opacity="0.75"/>
+          <ellipse cx="125" cy="113" rx="6" ry="3.5" fill="#FF8A80" opacity="0.75"/>
+          <path d="M91 116 Q100 125 109 116" stroke="#D84315" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+      `;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.trim());
+    }
+
+    const FALLBACK_IMAGES = {
+      hero: makeCutePortraitSVG('#fce4ec', '#5d4037', true),
+      tv1: makeCutePortraitSVG('#fff3e0', '#4e342e', false),
+      tv2: makeCutePortraitSVG('#e8f5e9', '#6d4c41', true),
+      tv3: makeCutePortraitSVG('#f3e5f5', '#3e2723', false)
+    };
+
+    const PALETTES = {
+      pink: { main: '#f3d8ec', sec: '#f7e1f1' },
+      lavender: { main: '#e4d7f5', sec: '#ede4f9' },
+      peach: { main: '#fde2d4', sec: '#fef0e8' },
+      mint: { main: '#d4f0e7', sec: '#e5f7f1' }
+    };
+
+    const BUILTIN_MELODY_NAMES = {
+      musicbox: 'Happy Birthday Music Box (Lembut)',
+      lullaby: 'Sweet Pastel Lullaby (Lo-Fi)',
+      waltz: 'Dreamy Piano Waltz',
+      chime: 'Cute Celebration Chime'
+    };
+
+    /**
+     * =========================================================================
+     * 2. STATE KARTU & CUSTOM MUSIK
+     * =========================================================================
+     */
+    const defaultState = {
+      palette: 'pink',
+      name: 'Bestie Tersayang',
+      ageSubtitle: 'Special Day Celebration ✨',
+      heroPhoto: FALLBACK_IMAGES.hero,
+      letter: `Selamat ulang tahun ya! 🎂✨\n\nSemoga di umur yang baru ini semua hal baik selalu menyertaimu, dilancarkan segala impiannya, sehat selalu, dan makin bahagia setiap harinya.\n\nTerima kasih sudah selalu hadir dan membawa energi positif. Nikmati hari spesialmu hari ini! 💖🌷`,
+      tvImg1: FALLBACK_IMAGES.tv1,
+      tvCap1: '"Momen paling seru bareng kamu, nggak pernah gagal bikin ketawa!"',
+      tvImg2: FALLBACK_IMAGES.tv2,
+      tvCap2: '"Semoga senyum manis ini selalu ada di setiap harimu ya 🌸"',
+      tvImg3: FALLBACK_IMAGES.tv3,
+      tvCap3: '"Mari buat lebih banyak cerita seru lagi di tahun ini! 🥂✨"',
+      giftMsg: 'Semoga kamu suka ya sama kado kecilnya 🥰',
+      // Pengaturan Custom Musik
+      musicMode: 'builtin', // 'builtin' | 'upload' | 'url'
+      builtinPreset: 'musicbox',
+      customAudioData: '', // Base64 audio/video (MP4/MP3) dari upload perangkat
+      customMediaType: 'audio', // 'video' (MP4/MOV/WEBM) | 'audio' (MP3/WAV/M4A)
+      customMediaDuration: '', // Durasi terformat mm:ss
+      customAudioUrl: '',  // Link audio/mp4 langsung
+      songTitle: 'Happy Birthday Music Box (Lembut)',
+      startOffset: 0,      // Detik mulai lagu (chorus)
+      volume: 80           // 10 - 100
+    };
+
+    let state = { ...defaultState };
+    let isStandaloneExport = false;
+    let activeBlobMediaUrl = ''; // ObjectURL instan untuk file MP4/MP3 besar tanpa membebani RAM
+
+    /**
+     * Penyimpanan IndexedDB untuk menyimpan Blob file MP4/MP3 berukuran besar
+     * agar tidak hilang saat halaman di-refresh di HP/Desktop.
+     */
+    const MEDIA_DB_NAME = 'BdayScrapbookMediaDB';
+    const MEDIA_STORE_NAME = 'customMediaStore';
+
+    function openMediaDB() {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) return reject('IndexedDB tidak didukung');
+        const req = indexedDB.open(MEDIA_DB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(MEDIA_STORE_NAME)) {
+            db.createObjectStore(MEDIA_STORE_NAME);
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function saveMediaBlobToIDB(fileBlob) {
+      try {
+        const db = await openMediaDB();
+        const tx = db.transaction(MEDIA_STORE_NAME, 'readwrite');
+        tx.objectStore(MEDIA_STORE_NAME).put(fileBlob, 'currentMediaBlob');
+      } catch (e) {
+        console.warn('Gagal menyimpan blob ke IndexedDB:', e);
+      }
+    }
+
+    async function loadMediaBlobFromIDB() {
+      try {
+        const db = await openMediaDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction(MEDIA_STORE_NAME, 'readonly');
+          const req = tx.objectStore(MEDIA_STORE_NAME).get('currentMediaBlob');
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function clearMediaBlobFromIDB() {
+      try {
+        const db = await openMediaDB();
+        const tx = db.transaction(MEDIA_STORE_NAME, 'readwrite');
+        tx.objectStore(MEDIA_STORE_NAME).delete('currentMediaBlob');
+      } catch (e) {}
+    }
+
+    function setActiveBlobUrl(blobOrFile) {
+      if (activeBlobMediaUrl) {
+        try { URL.revokeObjectURL(activeBlobMediaUrl); } catch (e) {}
+      }
+      activeBlobMediaUrl = URL.createObjectURL(blobOrFile);
+      return activeBlobMediaUrl;
+    }
+
+    async function loadInitialState() {
+      try {
+        // 1. Cek jika ini file HTML hasil ekspor standalone
+        const embeddedEl = document.getElementById('embedded-card-data');
+        if (embeddedEl && embeddedEl.textContent.trim().length > 2) {
+          const parsedEmbedded = JSON.parse(embeddedEl.textContent.trim());
+          state = { ...defaultState, ...parsedEmbedded };
+          isStandaloneExport = true;
+          return;
+        }
+
+        // 2. Cek URL Hash (#card=...)
+        if (window.location.hash && window.location.hash.startsWith('#card=')) {
+          const b64 = window.location.hash.slice(6);
+          const jsonStr = decodeURIComponent(escape(atob(b64)));
+          state = { ...defaultState, ...JSON.parse(jsonStr) };
+          return;
+        }
+
+        // 3. Cek localStorage
+        const saved = localStorage.getItem('bday_scrapbook_custom_music_v1');
+        if (saved) {
+          state = { ...defaultState, ...JSON.parse(saved) };
+        }
+
+        // 4. Pulihkan Blob media besar dari IndexedDB jika mode upload aktif
+        if (state.musicMode === 'upload') {
+          const savedBlob = await loadMediaBlobFromIDB();
+          if (savedBlob) {
+            setActiveBlobUrl(savedBlob);
+          }
+        }
+      } catch (e) {
+        console.warn('Memuat state default:', e);
+        state = { ...defaultState };
+      }
+    }
+
+    function saveStateToStorage() {
+      try {
+        localStorage.setItem('bday_scrapbook_custom_music_v1', JSON.stringify(state));
+      } catch (err) {
+        // Jika file audio Base64 melebihi kuota localStorage (~5MB), simpan tanpa audio Base64 di localStorage (tetap ada di RAM & siap di-download HTML)
+        try {
+          const liteState = { ...state, customAudioData: '' };
+          localStorage.setItem('bday_scrapbook_custom_music_v1', JSON.stringify(liteState));
+        } catch (e2) {}
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 3. ENGINE AUDIO DUAL-MODE (CUSTOM MP4/MP3/URL + 4 SYNTHESIZER) & SFX SENTUH
+     * =========================================================================
+     */
+    const htmlMedia = document.getElementById('custom-media-player');
+    let audioCtx = null;
+    let isPlaying = false;
+    let userPaused = false;
+    let sfxMuted = false;
+    let synthTimer = null;
+    let synthStep = 0;
+
+    // Tangga nada untuk 4 melodi bawaan
+    const F = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, Bb4: 466.16, B4: 493.88,
+      C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99
+    };
+
+    const SYNTH_PRESETS = {
+      musicbox: {
+        wave: 'sine',
+        tempo: 1.0,
+        notes: [
+          { f: F.C4, d: 0.32 }, { f: F.C4, d: 0.22 }, { f: F.D4, d: 0.52 }, { f: F.C4, d: 0.52 }, { f: F.F4, d: 0.52 }, { f: F.E4, d: 0.9 },
+          { f: F.C4, d: 0.32 }, { f: F.C4, d: 0.22 }, { f: F.D4, d: 0.52 }, { f: F.C4, d: 0.52 }, { f: F.G4, d: 0.52 }, { f: F.F4, d: 0.9 },
+          { f: F.C4, d: 0.32 }, { f: F.C4, d: 0.22 }, { f: F.C5, d: 0.52 }, { f: F.A4, d: 0.52 }, { f: F.F4, d: 0.52 }, { f: F.E4, d: 0.52 }, { f: F.D4, d: 0.9 },
+          { f: F.Bb4, d: 0.32 }, { f: F.Bb4, d: 0.22 }, { f: F.A4, d: 0.52 }, { f: F.F4, d: 0.52 }, { f: F.G4, d: 0.52 }, { f: F.F4, d: 1.1 }
+        ]
+      },
+      lullaby: {
+        wave: 'triangle',
+        tempo: 1.15,
+        notes: [
+          { f: F.E4, d: 0.45 }, { f: F.G4, d: 0.45 }, { f: F.C5, d: 0.7 }, { f: F.B4, d: 0.45 }, { f: F.G4, d: 0.7 },
+          { f: F.A4, d: 0.45 }, { f: F.F4, d: 0.45 }, { f: F.D4, d: 0.7 }, { f: F.E4, d: 0.45 }, { f: F.G4, d: 0.85 },
+          { f: F.E4, d: 0.45 }, { f: F.G4, d: 0.45 }, { f: F.D5, d: 0.7 }, { f: F.C5, d: 0.45 }, { f: F.A4, d: 0.7 },
+          { f: F.G4, d: 0.45 }, { f: F.E4, d: 0.45 }, { f: F.D4, d: 0.45 }, { f: F.C4, d: 1.1 }
+        ]
+      },
+      waltz: {
+        wave: 'sine',
+        tempo: 0.92,
+        notes: [
+          { f: F.C4, d: 0.4 }, { f: F.E4, d: 0.4 }, { f: F.G4, d: 0.4 }, { f: F.C5, d: 0.8 }, { f: F.B4, d: 0.4 },
+          { f: F.A4, d: 0.4 }, { f: F.F4, d: 0.4 }, { f: F.A4, d: 0.4 }, { f: F.D5, d: 0.8 }, { f: F.C5, d: 0.4 },
+          { f: F.B4, d: 0.4 }, { f: F.G4, d: 0.4 }, { f: F.D4, d: 0.4 }, { f: F.G4, d: 0.8 }, { f: F.F4, d: 0.4 },
+          { f: F.E4, d: 0.6 }, { f: F.D4, d: 0.6 }, { f: F.C4, d: 1.1 }
+        ]
+      },
+      chime: {
+        wave: 'sine',
+        tempo: 0.85,
+        notes: [
+          { f: F.G4, d: 0.3 }, { f: F.C5, d: 0.3 }, { f: F.E5, d: 0.3 }, { f: F.G5, d: 0.65 }, { f: F.E5, d: 0.3 }, { f: F.G5, d: 0.8 },
+          { f: F.F5, d: 0.3 }, { f: F.D5, d: 0.3 }, { f: F.B4, d: 0.3 }, { f: F.D5, d: 0.65 }, { f: F.C5, d: 0.95 }
+        ]
+      }
+    };
+
+    function ensureAudioContext() {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new Ctx();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playSynthTone(freq, dur, waveType) {
+      if (!audioCtx || !isPlaying) return;
+      const now = audioCtx.currentTime;
+      const vol = (state.volume / 100) * 0.14;
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = waveType || 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.01, vol), now + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + dur + 0.35);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + dur + 0.38);
+    }
+
+    function runSynthLoop() {
+      if (!isPlaying) return;
+      const preset = SYNTH_PRESETS[state.builtinPreset] || SYNTH_PRESETS.musicbox;
+      const note = preset.notes[synthStep];
+      const dur = note.d * preset.tempo;
+
+      playSynthTone(note.f, dur, preset.wave);
+      synthStep = (synthStep + 1) % preset.notes.length;
+
+      const gap = synthStep === 0 ? 650 : 75;
+      synthTimer = setTimeout(runSynthLoop, dur * 1000 + gap);
+    }
+
+    function startAudioPlayback() {
+      stopAudioPlayback(false);
+      isPlaying = true;
+      updateAudioUIState();
+
+      // Prioritaskan ObjectURL instan (untuk file besar/baru diupload), lalu Base64 (standalone HTML), atau URL eksternal
+      const customSrc = state.musicMode === 'upload'
+        ? (activeBlobMediaUrl || state.customAudioData)
+        : (state.musicMode === 'url' ? state.customAudioUrl : '');
+
+      if (customSrc) {
+        htmlMedia.src = customSrc;
+        htmlMedia.muted = false;
+        htmlMedia.volume = Math.min(1, Math.max(0.05, state.volume / 100));
+
+        const applyOffsetAndPlay = () => {
+          try {
+            if (state.startOffset > 0 && (!htmlMedia.duration || state.startOffset < htmlMedia.duration)) {
+              htmlMedia.currentTime = state.startOffset;
+            }
+          } catch (e) {}
+          htmlMedia.play().catch(() => {
+            // Fallback ke synthesizer jika browser memblokir / URL gagal dimuat
+            ensureAudioContext();
+            runSynthLoop();
+          });
+        };
+
+        if (htmlMedia.readyState >= 1) {
+          applyOffsetAndPlay();
+        } else {
+          htmlMedia.onloadedmetadata = applyOffsetAndPlay;
+          htmlMedia.onerror = () => {
+            showToast('⚠️ Link MP4/MP3 tidak dapat diputar, beralih ke melodi bawaan');
+            ensureAudioContext();
+            runSynthLoop();
+          };
+        }
+      } else {
+        // Putar melodi synthesizer bawaan
+        ensureAudioContext();
+        runSynthLoop();
+      }
+    }
+
+    function stopAudioPlayback(resetUI = true) {
+      isPlaying = false;
+      clearTimeout(synthTimer);
+      try {
+        htmlMedia.pause();
+      } catch (e) {}
+      if (resetUI) updateAudioUIState();
+    }
+
+    function toggleAudioPlayback() {
+      if (isPlaying) {
+        userPaused = true;
+        stopAudioPlayback(true);
+      } else {
+        userPaused = false;
+        startAudioPlayback();
+      }
+    }
+
+    function toggleSfxMute() {
+      sfxMuted = !sfxMuted;
+      const btn = document.getElementById('btn-toggle-sfx');
+      if (sfxMuted) {
+        btn.textContent = '🔕';
+        btn.classList.add('opacity-60');
+        showToast('🔕 Efek suara sentuhan dimatikan');
+      } else {
+        btn.textContent = '🔔';
+        btn.classList.remove('opacity-60');
+        playSfx('sparkle');
+        showToast('🔔 Efek suara sentuhan aktif');
+      }
+    }
+
+    /**
+     * Synthesizer Efek Suara (SFX) saat elemen disentuh/dianimasikan
+     * Tipe: 'pop' | 'sparkle' | 'paper' | 'tv' | 'boing' | 'fanfare'
+     */
+    function playSfx(type = 'pop') {
+      if (sfxMuted) return;
+      try {
+        ensureAudioContext();
+        const now = audioCtx.currentTime;
+
+        if (type === 'pop') {
+          // Cute bubble pop
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(980, now + 0.085);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.11);
+        } else if (type === 'sparkle') {
+          // Magical chime arpeggio
+          [659.25, 880, 1174.66, 1567.98].forEach((freq, i) => {
+            const t = now + i * 0.045;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, t);
+            gain.gain.setValueAtTime(0.1, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.26);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + 0.28);
+          });
+        } else if (type === 'paper') {
+          // Soft paper rustle / flip
+          const len = Math.floor(audioCtx.sampleRate * 0.16);
+          const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+          const ch = buf.getChannelData(0);
+          for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.sin((i / len) * Math.PI);
+
+          const src = audioCtx.createBufferSource();
+          src.buffer = buf;
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(1600, now);
+          filter.Q.setValueAtTime(1.5, now);
+
+          const gain = audioCtx.createGain();
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+          src.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+          src.start(now);
+        } else if (type === 'tv') {
+          // Cute retro TV dial click + warm blip
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(340, now);
+          osc.frequency.setValueAtTime(680, now + 0.04);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } else if (type === 'boing') {
+          // Playful plushie spring boing
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(240, now);
+          osc.frequency.exponentialRampToValueAtTime(620, now + 0.14);
+          osc.frequency.exponentialRampToValueAtTime(380, now + 0.26);
+          gain.gain.setValueAtTime(0.16, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        }
+      } catch (e) {}
+    }
+
+    // Animasi memantul + efek suara saat elemen scrapbook disentuh
+    function triggerInteractiveTap(el, sfxType = 'pop') {
+      playSfx(sfxType);
+      if (!el) return;
+      el.classList.remove('anim-tap-boing');
+      void el.offsetWidth; // Reflow agar animasi bisa dipicu berulang kali
+      el.classList.add('anim-tap-boing');
+    }
+
+    function updateAudioUIState() {
+      const eq = document.getElementById('eq-indicator');
+      const pillIcon = document.getElementById('pill-play-icon');
+      const vinyl = document.getElementById('mini-vinyl-disc');
+      const edIcon = document.getElementById('editor-preview-audio-icon');
+      const edText = document.getElementById('editor-preview-audio-text');
+
+      if (isPlaying) {
+        eq.classList.add('eq-playing');
+        pillIcon.textContent = '❚❚';
+        if (vinyl) vinyl.classList.add('animate-spin');
+        if (edIcon) edIcon.textContent = '⏸️';
+        if (edText) edText.textContent = 'Jeda Pratinjau Musik';
+      } else {
+        eq.classList.remove('eq-playing');
+        pillIcon.textContent = '▶';
+        if (vinyl) vinyl.classList.remove('animate-spin');
+        if (edIcon) edIcon.textContent = '▶️';
+        if (edText) edText.textContent = 'Tes Putar / Jeda Musik Sekarang';
+      }
+    }
+
+    // Efek suara tiup lilin & chime kotak kado
+    function playBlowEffect() {
+      if (sfxMuted) return;
+      try {
+        ensureAudioContext();
+        const now = audioCtx.currentTime;
+        const len = audioCtx.sampleRate * 0.4;
+        const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) ch[i] = Math.random() * 2 - 1;
+
+        const src = audioCtx.createBufferSource();
+        src.buffer = buf;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(550, now);
+        filter.frequency.exponentialRampToValueAtTime(120, now + 0.4);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.18, now + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        src.start(now);
+
+        // Chime perayaan lembut setelah tiupan lilin
+        setTimeout(() => playSfx('sparkle'), 260);
+      } catch (e) {}
+    }
+
+    function playGiftChime() {
+      if (sfxMuted) return;
+      try {
+        ensureAudioContext();
+        playSfx('boing');
+        [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((freq, i) => {
+          const t = audioCtx.currentTime + 0.08 + i * 0.065;
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = 'triangle';
+          o.frequency.setValueAtTime(freq, t);
+          g.gain.setValueAtTime(0.09, t);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.36);
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.start(t);
+          o.stop(t + 0.38);
+        });
+      } catch (e) {}
+    }
+
+    /**
+     * =========================================================================
+     * 4. LOGIKA KONTROL STUDIO CUSTOM MUSIK (MP4 & MP3)
+     * =========================================================================
+     */
+    function selectMusicMode(mode) {
+      state.musicMode = mode;
+
+      // Update tampilan tab
+      ['builtin', 'upload', 'url'].forEach(m => {
+        const btn = document.getElementById(`mtype-${m}`);
+        const panel = document.getElementById(`music-panel-${m}`);
+        if (m === mode) {
+          btn.classList.add('bg-pink-500', 'text-white');
+          btn.classList.remove('text-pink-700', 'hover:bg-pink-50');
+          panel.classList.remove('hidden');
+        } else {
+          btn.classList.remove('bg-pink-500', 'text-white');
+          btn.classList.add('text-pink-700', 'hover:bg-pink-50');
+          panel.classList.add('hidden');
+        }
+      });
+
+      const badge = document.getElementById('audio-source-badge');
+      if (mode === 'builtin') {
+        badge.textContent = 'Musik Bawaan';
+        const presetName = BUILTIN_MELODY_NAMES[state.builtinPreset];
+        document.getElementById('input-song-title').value = presetName;
+        state.songTitle = presetName;
+      } else if (mode === 'upload') {
+        badge.textContent = state.customMediaType === 'video' ? '🎬 MP4 Audio' : '🎵 MP3 Audio';
+      } else {
+        badge.textContent = '🔗 Link MP4/MP3';
+      }
+
+      syncMusicTitlesUI();
+      if (isPlaying) startAudioPlayback();
+    }
+
+    function onBuiltinPresetChange() {
+      const val = document.getElementById('input-builtin-preset').value;
+      state.builtinPreset = val;
+      state.songTitle = BUILTIN_MELODY_NAMES[val];
+      document.getElementById('input-song-title').value = state.songTitle;
+      synthStep = 0;
+      playSfx('pop');
+      syncMusicTitlesUI();
+      if (isPlaying) startAudioPlayback();
+    }
+
+    function formatSecondsMMSS(sec) {
+      if (!sec || isNaN(sec) || !isFinite(sec)) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function handleCustomAudioUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const isVideoFile = file.type.startsWith('video/') || /\.(mp4|mov|webm|mkv|3gp)$/i.test(file.name);
+
+      // 1. Buat ObjectURL instan agar file MP4/MP3 ukuran besar pun langsung terbaca dan berbunyi seketika tanpa hang
+      const instantUrl = setActiveBlobUrl(file);
+      state.musicMode = 'upload';
+      state.customMediaType = isVideoFile ? 'video' : 'audio';
+
+      // Simpan Blob ke IndexedDB agar tetap awet saat browser di-refresh
+      saveMediaBlobToIDB(file);
+
+      // Bersihkan ekstensi file untuk judul lagu otomatis
+      const cleanTitle = file.name.replace(/\.[^/.]+$/, '');
+      state.songTitle = cleanTitle;
+      document.getElementById('input-song-title').value = cleanTitle;
+
+      const badgeTop = document.getElementById('audio-source-badge');
+      const infoBox = document.getElementById('uploaded-audio-info');
+      const mediaBadge = document.getElementById('uploaded-media-badge');
+      const fnLabel = document.getElementById('uploaded-audio-filename');
+      const durLabel = document.getElementById('uploaded-media-duration');
+
+      badgeTop.textContent = isVideoFile ? '🎬 MP4 Audio' : '🎵 MP3 Audio';
+      mediaBadge.textContent = isVideoFile ? '🎬 MP4 Audio' : '🎵 MP3 Audio';
+      fnLabel.textContent = file.name;
+      infoBox.classList.remove('hidden');
+
+      // 2. Deteksi durasi media secara instan lewat ObjectURL
+      const probeMedia = document.createElement('video');
+      probeMedia.preload = 'metadata';
+      probeMedia.src = instantUrl;
+      probeMedia.onloadedmetadata = function() {
+        const dur = Math.floor(probeMedia.duration || 0);
+        state.customMediaDuration = formatSecondsMMSS(dur);
+        durLabel.textContent = state.customMediaDuration;
+        if (dur > 5) {
+          document.getElementById('input-start-offset').max = Math.max(10, dur - 2);
+        }
+      };
+
+      // 3. Untuk file ukuran kecil (< 6 MB), konversi juga ke Base64 di latar belakang agar ikut tertanam saat Download HTML Lengkap
+      if (file.size <= 6 * 1024 * 1024) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          state.customAudioData = e.target.result;
+          saveStateToStorage();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        state.customAudioData = '';
+        saveStateToStorage();
+        showToast('ℹ️ File > 6MB diputar instan (tidak disematkan di file HTML ekspor)');
+      }
+
+      syncMusicTitlesUI();
+      playSfx('sparkle');
+      showToast(isVideoFile ? '🎬 Suara dari video MP4 berhasil dimuat!' : '🎵 File audio MP3 berhasil dimuat!');
+      startAudioPlayback();
+
+      // Reset value input agar user bisa memilih ulang file yang sama jika diperlukan
+      event.target.value = '';
+    }
+
+    function onAudioUrlInput() {
+      state.customAudioUrl = document.getElementById('input-audio-url').value.trim();
+      if (!document.getElementById('input-song-title').value.trim()) {
+        state.songTitle = 'Custom Birthday Song 🎶';
+        document.getElementById('input-song-title').value = state.songTitle;
+      }
+      syncMusicTitlesUI();
+    }
+
+    function onAudioControlChange() {
+      const offsetVal = parseInt(document.getElementById('input-start-offset').value, 10) || 0;
+      const volVal = parseInt(document.getElementById('input-volume').value, 10) || 80;
+
+      state.startOffset = offsetVal;
+      state.volume = volVal;
+
+      document.getElementById('label-start-offset').textContent = `${offsetVal} dtk`;
+      document.getElementById('label-volume').textContent = `${volVal}%`;
+
+      htmlMedia.volume = Math.min(1, Math.max(0.05, volVal / 100));
+    }
+
+    function syncMusicTitlesUI() {
+      const title = state.songTitle || 'Happy Birthday Music Box';
+      document.getElementById('pill-song-title').textContent = title;
+      document.getElementById('scrapbook-song-name').textContent = title;
+    }
+
+    /**
+     * =========================================================================
+     * 5. RENDER & SINKRONISASI KONTEN KARTU
+     * =========================================================================
+     */
+    function applyStateToUI() {
+      // Tema Warna
+      const pal = PALETTES[state.palette] || PALETTES.pink;
+      document.documentElement.style.setProperty('--bg-main', pal.main);
+      document.documentElement.style.setProperty('--bg-secondary', pal.sec);
+
+      document.querySelectorAll('.palette-btn').forEach(btn => {
+        if (btn.dataset.palette === state.palette) {
+          btn.classList.add('border-pink-500');
+          btn.classList.remove('border-transparent');
+        } else {
+          btn.classList.remove('border-pink-500');
+          btn.classList.add('border-transparent');
+        }
+      });
+
+      // Layar 2 (Hero)
+      document.getElementById('view-hero-photo').src = state.heroPhoto || FALLBACK_IMAGES.hero;
+      document.getElementById('view-recipient-name').textContent = state.name;
+      document.getElementById('view-age-subtitle').textContent = state.ageSubtitle;
+
+      // Layar 4 (Surat & 3 TV Retro)
+      document.getElementById('letter-recipient').textContent = state.name;
+      document.getElementById('view-letter-text').textContent = state.letter;
+
+      document.getElementById('view-tv-img-1').src = state.tvImg1 || FALLBACK_IMAGES.tv1;
+      document.getElementById('view-tv-cap-1').textContent = state.tvCap1;
+
+      document.getElementById('view-tv-img-2').src = state.tvImg2 || FALLBACK_IMAGES.tv2;
+      document.getElementById('view-tv-cap-2').textContent = state.tvCap2;
+
+      document.getElementById('view-tv-img-3').src = state.tvImg3 || FALLBACK_IMAGES.tv3;
+      document.getElementById('view-tv-cap-3').textContent = state.tvCap3;
+
+      document.getElementById('view-gift-msg').textContent = state.giftMsg;
+
+      // Sinkronkan ke Form Editor
+      document.getElementById('input-name').value = state.name;
+      document.getElementById('input-age').value = state.ageSubtitle;
+      document.getElementById('edit-thumb-main').src = state.heroPhoto;
+      document.getElementById('input-letter').value = state.letter;
+
+      document.getElementById('edit-thumb-tv1').src = state.tvImg1;
+      document.getElementById('input-tv-cap1').value = state.tvCap1;
+      document.getElementById('edit-thumb-tv2').src = state.tvImg2;
+      document.getElementById('input-tv-cap2').value = state.tvCap2;
+      document.getElementById('edit-thumb-tv3').src = state.tvImg3;
+      document.getElementById('input-tv-cap3').value = state.tvCap3;
+
+      document.getElementById('input-gift-msg').value = state.giftMsg;
+
+      // Sinkronkan Pengaturan Musik ke Form
+      document.getElementById('input-builtin-preset').value = state.builtinPreset;
+      document.getElementById('input-audio-url').value = state.customAudioUrl || '';
+      document.getElementById('input-song-title').value = state.songTitle;
+      document.getElementById('input-start-offset').value = state.startOffset;
+      document.getElementById('label-start-offset').textContent = `${state.startOffset} dtk`;
+      document.getElementById('input-volume').value = state.volume;
+      document.getElementById('label-volume').textContent = `${state.volume}%`;
+
+      if (state.customAudioData || activeBlobMediaUrl) {
+        const infoBox = document.getElementById('uploaded-audio-info');
+        const mediaBadge = document.getElementById('uploaded-media-badge');
+        const fnLabel = document.getElementById('uploaded-audio-filename');
+        const durLabel = document.getElementById('uploaded-media-duration');
+
+        mediaBadge.textContent = state.customMediaType === 'video' ? '🎬 MP4 Audio' : '🎵 MP3 Audio';
+        fnLabel.textContent = state.songTitle;
+        durLabel.textContent = state.customMediaDuration || '';
+        infoBox.classList.remove('hidden');
+      }
+
+      selectMusicMode(state.musicMode);
+      syncMusicTitlesUI();
+    }
+
+    /**
+     * =========================================================================
+     * 6. NAVIGASI LAYAR INTERAKTIF (SCREEN 1 -> 2 -> 3 -> 4)
+     * =========================================================================
+     */
+    let candlesExtinct = false;
+
+    function handleHatTap() {
+      const hat = document.getElementById('party-hat-hero');
+      triggerInteractiveTap(hat, 'sparkle');
+      setTimeout(() => goToScreen(2), 180);
+    }
+
+    function switchAppMode(mode) {
+      const viewer = document.getElementById('viewer-section');
+      const editor = document.getElementById('editor-section');
+      const tabView = document.getElementById('tab-view');
+      const tabEdit = document.getElementById('tab-edit');
+
+      if (mode === 'edit') {
+        viewer.classList.add('hidden');
+        editor.classList.remove('hidden');
+        tabEdit.classList.add('bg-pink-500', 'text-white', 'shadow-sm');
+        tabEdit.classList.remove('text-pink-700', 'hover:bg-pink-200/60');
+        tabView.classList.remove('bg-pink-500', 'text-white', 'shadow-sm');
+        tabView.classList.add('text-pink-700', 'hover:bg-pink-200/60');
+      } else {
+        editor.classList.add('hidden');
+        viewer.classList.remove('hidden');
+        tabView.classList.add('bg-pink-500', 'text-white', 'shadow-sm');
+        tabView.classList.remove('text-pink-700', 'hover:bg-pink-200/60');
+        tabEdit.classList.remove('bg-pink-500', 'text-white', 'shadow-sm');
+        tabEdit.classList.add('text-pink-700', 'hover:bg-pink-200/60');
+      }
+    }
+
+    function goToScreen(num) {
+      [1, 2, 3, 4].forEach(n => {
+        const el = document.getElementById(`screen-${n}`);
+        if (n === num) {
+          el.classList.remove('hidden');
+          if (n === 4) el.scrollTop = 0;
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+
+      const musicPill = document.getElementById('floating-music-pill');
+      if (num >= 2) {
+        musicPill.classList.remove('hidden');
+      } else {
+        musicPill.classList.add('hidden');
+      }
+
+      if (num === 2) {
+        triggerConfettiBurst();
+        if (!isPlaying && !userPaused) {
+          startAudioPlayback();
+        }
+      }
+    }
+
+    function blowOutCandles() {
+      if (candlesExtinct) return;
+      candlesExtinct = true;
+
+      playBlowEffect();
+
+      document.querySelectorAll('.candle-flame').forEach(f => f.classList.add('hidden'));
+      document.querySelectorAll('.candle-smoke').forEach(s => {
+        s.classList.remove('hidden');
+        s.classList.add('anim-smoke');
+      });
+
+      const heading = document.getElementById('cake-heading');
+      heading.innerHTML = 'Ciee udah nambah<br>umur aja 🎉';
+      heading.classList.add('anim-pop');
+
+      document.getElementById('cake-subtext').textContent = 'Biar aku aja yang masukin kadonya 🎁';
+
+      document.getElementById('cake-btn-container').innerHTML = `
+        <button onclick="goToScreen(4)" class="btn-pastel-pink font-fredoka font-semibold px-9 py-2.5 rounded-full text-base anim-pop">
+          Lanjut ➔
+        </button>
+      `;
+
+      triggerConfettiBurst();
+    }
+
+    function revealGiftBox() {
+      document.getElementById('gift-closed-box').classList.add('hidden');
+      document.getElementById('gift-opened-box').classList.remove('hidden');
+      playGiftChime();
+      triggerConfettiBurst();
+    }
+
+    function restartCardFlow() {
+      candlesExtinct = false;
+      clearConfetti();
+
+      document.querySelectorAll('.candle-flame').forEach(f => f.classList.remove('hidden'));
+      document.querySelectorAll('.candle-smoke').forEach(s => {
+        s.classList.add('hidden');
+        s.classList.remove('anim-smoke');
+      });
+
+      document.getElementById('cake-heading').innerHTML = 'Jangan cuman diliatin<br>tiup dong lilinnya 😊';
+      document.getElementById('cake-subtext').textContent = '*Make a wish dulu baru tekan tombol tiup ya ✨';
+      document.getElementById('cake-btn-container').innerHTML = `
+        <button onclick="blowOutCandles()" class="btn-pastel-pink font-fredoka font-semibold px-9 py-2.5 rounded-full text-base flex items-center gap-2 mx-auto">
+          <span>🌬️</span>
+          <span>Tiup</span>
+        </button>
+      `;
+
+      document.getElementById('gift-closed-box').classList.remove('hidden');
+      document.getElementById('gift-opened-box').classList.add('hidden');
+
+      goToScreen(1);
+    }
+
+    /**
+     * =========================================================================
+     * 7. EDITOR ACTIONS (UPLOAD FOTO, SIMPAN, DOWNLOAD HTML, SALIN LINK)
+     * =========================================================================
+     */
+    function selectPalette(key) {
+      state.palette = key;
+      const pal = PALETTES[key] || PALETTES.pink;
+      document.documentElement.style.setProperty('--bg-main', pal.main);
+      document.documentElement.style.setProperty('--bg-secondary', pal.sec);
+
+      document.querySelectorAll('.palette-btn').forEach(btn => {
+        if (btn.dataset.palette === key) {
+          btn.classList.add('border-pink-500');
+          btn.classList.remove('border-transparent');
+        } else {
+          btn.classList.remove('border-pink-500');
+          btn.classList.add('border-transparent');
+        }
+      });
+    }
+
+    function handlePhotoUpload(event, fieldName) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const MAX = 380;
+          let w = img.width;
+          let h = img.height;
+          if (w > h && w > MAX) { h *= MAX / w; w = MAX; }
+          else if (h > MAX) { w *= MAX / h; h = MAX; }
+
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          state[fieldName] = dataUrl;
+
+          if (fieldName === 'heroPhoto') document.getElementById('edit-thumb-main').src = dataUrl;
+          if (fieldName === 'tvImg1') document.getElementById('edit-thumb-tv1').src = dataUrl;
+          if (fieldName === 'tvImg2') document.getElementById('edit-thumb-tv2').src = dataUrl;
+          if (fieldName === 'tvImg3') document.getElementById('edit-thumb-tv3').src = dataUrl;
+
+          showToast('📷 Foto berhasil diperbarui!');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function syncFormToState() {
+      state.name = document.getElementById('input-name').value.trim() || defaultState.name;
+      state.ageSubtitle = document.getElementById('input-age').value.trim() || defaultState.ageSubtitle;
+      state.letter = document.getElementById('input-letter').value.trim() || defaultState.letter;
+      state.tvCap1 = document.getElementById('input-tv-cap1').value.trim() || defaultState.tvCap1;
+      state.tvCap2 = document.getElementById('input-tv-cap2').value.trim() || defaultState.tvCap2;
+      state.tvCap3 = document.getElementById('input-tv-cap3').value.trim() || defaultState.tvCap3;
+      state.giftMsg = document.getElementById('input-gift-msg').value.trim() || defaultState.giftMsg;
+
+      state.songTitle = document.getElementById('input-song-title').value.trim() || 'Happy Birthday Song 🎶';
+      state.customAudioUrl = document.getElementById('input-audio-url').value.trim();
+      state.startOffset = parseInt(document.getElementById('input-start-offset').value, 10) || 0;
+      state.volume = parseInt(document.getElementById('input-volume').value, 10) || 80;
+    }
+
+    function saveAndPreviewCard() {
+      syncFormToState();
+      saveStateToStorage();
+      applyStateToUI();
+      switchAppMode('view');
+      restartCardFlow();
+      showToast('✨ Kartu & musik berhasil disimpan!');
+    }
+
+    // Ekspor seluruh halaman menjadi satu file HTML lengkap berisi foto & lagu Base64
+    function downloadStandaloneHTML() {
+      syncFormToState();
+      saveStateToStorage();
+
+      // Kloning dokumen saat ini & tanamkan seluruh state JSON ke tag #embedded-card-data
+      const docClone = document.documentElement.cloneNode(true);
+      const dataScript = docClone.querySelector('#embedded-card-data');
+      if (dataScript) {
+        dataScript.textContent = JSON.stringify(state);
+      }
+
+      const fullHtml = '<!DOCTYPE html>\n' + docClone.outerHTML;
+      const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      const safeFileName = (state.name || 'kartu-ultah')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `happy-birthday-${safeFileName || 'card'}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      showToast('⬇️ File HTML lengkap dengan musik berhasil diunduh!');
+    }
+
+    function copyShareableLink() {
+      syncFormToState();
+      saveStateToStorage();
+      applyStateToUI();
+
+      // Sertakan pengaturan teks, tema, dan URL audio eksternal ke dalam hash
+      const shareObj = { ...state };
+      delete shareObj.customAudioData; // File lokal terlalu besar untuk URL, gunakan tombol Download HTML
+      if (shareObj.heroPhoto && shareObj.heroPhoto.length > 15000) delete shareObj.heroPhoto;
+      if (shareObj.tvImg1 && shareObj.tvImg1.length > 15000) delete shareObj.tvImg1;
+      if (shareObj.tvImg2 && shareObj.tvImg2.length > 15000) delete shareObj.tvImg2;
+      if (shareObj.tvImg3 && shareObj.tvImg3.length > 15000) delete shareObj.tvImg3;
+
+      const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(shareObj))));
+      const shareUrl = `${window.location.origin}${window.location.pathname}#card=${b64}`;
+
+      try {
+        window.history.replaceState(null, '', `#card=${b64}`);
+      } catch (e) {}
+
+      const buf = document.getElementById('clipboard-buffer');
+      buf.value = shareUrl;
+      buf.select();
+      buf.setSelectionRange(0, 99999);
+      try {
+        document.execCommand('copy');
+        if (state.musicMode === 'upload' && state.customAudioData) {
+          showToast('🔗 Link disalin! Untuk ikutkan file MP3 upload, klik Download HTML.');
+        } else {
+          showToast('🔗 Link kartu berhasil disalin!');
+        }
+      } catch (err) {
+        showToast('🔗 Link siap disalin dari address bar!');
+      }
+    }
+
+    function resetCardToDefault() {
+      stopAudioPlayback(true);
+      if (activeBlobMediaUrl) {
+        try { URL.revokeObjectURL(activeBlobMediaUrl); } catch (e) {}
+        activeBlobMediaUrl = '';
+      }
+      clearMediaBlobFromIDB();
+      state = { ...defaultState };
+      localStorage.removeItem('bday_scrapbook_custom_music_v1');
+      document.getElementById('uploaded-audio-info').classList.add('hidden');
+      try {
+        window.history.replaceState(null, '', window.location.pathname);
+      } catch (e) {}
+      applyStateToUI();
+      showToast('↺ Semua pengaturan dikembalikan ke default');
+    }
+
+    function showToast(msg) {
+      const banner = document.getElementById('toast-banner');
+      document.getElementById('toast-text').textContent = msg;
+      banner.classList.remove('opacity-0', '-translate-y-3');
+      banner.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        banner.classList.add('opacity-0', '-translate-y-3');
+        banner.classList.remove('opacity-100', 'translate-y-0');
+      }, 2800);
+    }
+
+    /**
+     * =========================================================================
+     * 8. KONFETI WARNA-WARNI (HTML5 CANVAS)
+     * =========================================================================
+     */
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const cCtx = confettiCanvas.getContext('2d');
+    let particles = [];
+    let animFrame = null;
+
+    function resizeConfetti() {
+      const wrap = document.getElementById('phone-wrapper');
+      if (!wrap) return;
+      confettiCanvas.width = wrap.clientWidth;
+      confettiCanvas.height = wrap.clientHeight;
+    }
+
+    function triggerConfettiBurst() {
+      resizeConfetti();
+      const colors = ['#ef629f', '#ff8a80', '#ffd54f', '#81d4fa', '#ce93d8', '#a5d6a7', '#ffffff'];
+      particles = [];
+
+      for (let i = 0; i < 85; i++) {
+        particles.push({
+          x: confettiCanvas.width / 2 + (Math.random() - 0.5) * 90,
+          y: confettiCanvas.height * 0.45,
+          vx: (Math.random() - 0.5) * 11,
+          vy: -Math.random() * 10 - 3,
+          size: Math.random() * 7 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 360,
+          rotV: (Math.random() - 0.5) * 12,
+          circle: Math.random() > 0.55
+        });
+      }
+
+      if (!animFrame) loopConfetti();
+    }
+
+    function loopConfetti() {
+      cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.25;
+        p.vx *= 0.985;
+        p.rot += p.rotV;
+
+        cCtx.save();
+        cCtx.translate(p.x, p.y);
+        cCtx.rotate((p.rot * Math.PI) / 180);
+        cCtx.fillStyle = p.color;
+
+        if (p.circle) {
+          cCtx.beginPath();
+          cCtx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+          cCtx.fill();
+        } else {
+          cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+        }
+        cCtx.restore();
+      });
+
+      particles = particles.filter(p => p.y < confettiCanvas.height + 20);
+      if (particles.length > 0) {
+        animFrame = requestAnimationFrame(loopConfetti);
+      } else {
+        animFrame = null;
+      }
+    }
+
+    function clearConfetti() {
+      particles = [];
+      if (animFrame) {
+        cancelAnimationFrame(animFrame);
+        animFrame = null;
+      }
+      cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+
+    /**
+     * =========================================================================
+     * 9. INISIALISASI APLIKASI
+     * =========================================================================
+     */
+    window.addEventListener('resize', resizeConfetti);
+    window.addEventListener('load', async () => {
+      await loadInitialState();
+      applyStateToUI();
+      resizeConfetti();
+      goToScreen(1);
+    });
+  </script>
+</body>
+</html>
